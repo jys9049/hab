@@ -1,0 +1,71 @@
+// 기본 배경
+$background: #fffdf9;
+$card-background: #ffffff;
+
+// 텍스트
+$text-title: #1f1f1f;
+$text: #6b7280;
+$text-green: #10b981;
+$text-red: #ef4444;
+$text-gray: #9ca3af;
+
+// 포인트 컬러 (브랜드 톤)
+$point: #ff9472; // 주 포인트
+$point-sub: #ffe1d2; // 서브 포인트
+
+// 파스텔 컬러
+$pastel-sky: #96c3ff5f;
+
+// 프라이머리 (버튼 등)
+$primary: #3b82f6; // 기본 파랑
+$primary-hover: #2563eb; // hover 시 더 진한 파랑
+$primary-light: #dbeafe; // 밝은 서브톤 (그래프 영역 등)
+
+// 버튼
+$button: #c9c9c9; // 중립 버튼
+$button-hover: #c0c0c0;
+$button-disabled: #e5e7eb;
+
+// 차트 색상
+$chart-blue: #3b82f6;
+$chart-green: #10b981;
+$chart-yellow: #facc15;
+$chart-red: #f87171;
+
+// 테두리 / 구분선
+$border: #e5e7eb;
+$shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+$shadow-reverse: 0px -4px 12px rgba(0, 0, 0, 0.06);
+
+:root {
+  --background: #{$background};
+  --card-background: #{$card-background};
+
+  --text-title: #{$text-title};
+  --text: #{$text};
+  --text-green: #{$text-green};
+  --text-red: #{$text-red};
+  --text-gray: #{$text-gray};
+
+  --point: #{$point};
+  --point-sub: #{$point-sub};
+
+  --pastel-sky: #{$pastel-sky};
+
+  --primary: #{$primary};
+  --primary-hover: #{$primary-hover};
+  --primary-light: #{$primary-light};
+
+  --button: #{$button};
+  --button-hover: #{$button-hover};
+  --button-disabled: #{$button-disabled};
+
+  --chart-blue: #{$chart-blue};
+  --chart-green: #{$chart-green};
+  --chart-yellow: #{$chart-yellow};
+  --chart-red: #{$chart-red};
+
+  --border: #{$border};
+  --shadow: #{$shadow};
+  --shadow-reverse: #{$shadow-reverse};
+}
