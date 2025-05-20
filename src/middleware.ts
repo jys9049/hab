@@ -50,11 +50,9 @@ export async function middleware(request: NextRequest) {
 
     if (!accessToken || !refreshToken) return NextResponse.next();
     else if (!accessToken && refreshToken) {
-      console.log("refresh!!!!");
       await fetch("/api/auth/refresh")
         .then(async (res) => {
           const data = await res.json();
-          console.log(data);
           return data;
         })
         .catch((error) => {
