@@ -1,0 +1,63 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 60px;
+}
+
+.iconWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+
+  & > svg {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+.bus {
+  background-color: #e5f1ff;
+  & > svg {
+    width: 12px;
+    fill: #4d94db;
+  }
+}
+
+.food {
+  background-color: #ffe8e8;
+  & > svg {
+    fill: #e15c5c;
+  }
+}
+
+.etc {
+  background-color: #f0e8ff;
+  & > svg {
+    fill: #9676e6;
+  }
+}
+
+.pay {
+  background-color: #e8fceb;
+  & > svg {
+    fill: #2bb673;
+  }
+}
+
+.save {
+  background-color: #e6f8f5;
+  & > svg {
+    fill: #33bba1;
+  }
+}
+
+.shopping {
+  background-color: #fff0e5;
+  & > svg {
+    fill: #ff9c60;
+  }
+}

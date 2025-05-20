@@ -1,0 +1,112 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  padding-top: 20px;
+  height: calc(100% - 65px);
+}
+
+.alarmContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  padding: 24px 0;
+  background-color: var(--pastel-sky);
+}
+
+.dateContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.iconBtn {
+  border: none;
+  background: inherit;
+  & > svg {
+    width: 14px;
+    fill: var(--text);
+  }
+}
+
+.summaryBox {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+}
+
+.flexWrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.borderTop {
+  border-top: 1px dashed var(--text-gray);
+  padding-top: 12px;
+}
+
+.crossLine {
+  border-top: 2px solid #efefef;
+  margin: 20px 20px;
+}
+
+.historyContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.historyWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-left: 8px;
+}
+
+.historyTitleAndDate {
+  display: flex;
+  align-items: center;
+  width: 130px;
+  justify-content: space-between;
+}
+
+.historyDetail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.historyTopLine {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 10px;
+}
+
+.addIcon {
+  position: absolute;
+  bottom: 80px;
+  right: 20px;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  background-color: var(--primary);
+
+  &:hover {
+    background-color: var(--primary-hover);
+  }
+
+  & > svg {
+    fill: white;
+  }
+}

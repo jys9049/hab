@@ -1,0 +1,193 @@
+@use "@/styles/_mixin" as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 32px;
+  background-color: white;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.summaryBox {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.flexWrap {
+  display: flex;
+  justify-content: space-between;
+}
+
+.subText {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.income {
+  color: var(--text-green);
+}
+
+.expense {
+  color: var(--text-red);
+}
+
+.borderTop {
+  border-top: 1px dashed var(--text-gray);
+  padding-top: 12px;
+}
+
+.expenseCategoryContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+  gap: 32px;
+}
+
+.expenseCategoryChart {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.chartWrap {
+  width: 140px;
+  height: 140px;
+}
+
+.legendContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+.legendTitleWrap {
+  display: flex;
+  gap: 8px;
+}
+
+.legendLabelWrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  font-size: 14px;
+}
+
+.historyContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.historyWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-left: 8px;
+}
+
+.historyTitleAndDate {
+  display: flex;
+  align-items: center;
+  width: 130px;
+  justify-content: space-between;
+}
+
+.historyDetail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text);
+  font-size: 14px;
+  padding: 4px 0;
+}
+
+.historyBottomLine {
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 10px;
+}
+
+.historyBtnContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.historyBtn {
+  border: none;
+  background-color: white;
+  color: var(--text-gray);
+  padding: 12px 0px;
+  width: 100%;
+  font-size: 14px;
+}
+
+.lastMonthCompare {
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  padding-bottom: 12px;
+}
+
+.dateContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.iconBtn {
+  border: none;
+  background: inherit;
+  & > svg {
+    width: 14px;
+    fill: var(--text);
+  }
+}
+
+.trendGap {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@include mobile {
+  .container {
+    gap: 24px;
+  }
+
+  .chartWrap {
+    width: 140px;
+    height: 140px;
+  }
+
+  .legendLabelWrap {
+    gap: 8px;
+  }
+
+  .legendContainer {
+    gap: 10px;
+  }
+}
+
+@include mobile-s {
+  .legendLabelWrap {
+    font-size: 12px;
+    gap: 6px;
+  }
+  .chartWrap {
+    width: 120px;
+    height: 120px;
+  }
+}

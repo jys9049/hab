@@ -1,0 +1,25 @@
+@use "@/styles/_mixin" as *;
+
+.header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 30px 20px 20px;
+  box-shadow: var(--shadow);
+}
+
+.hText {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--point);
+}
+
+@include tablet {
+  .header {
+    box-shadow: none;
+  }
+}

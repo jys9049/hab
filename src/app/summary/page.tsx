@@ -1,0 +1,344 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Title,
+} from "chart.js";
+import { Doughnut, Bar } from "react-chartjs-2";
+import st from "./styles.module.scss";
+import dayjs from "dayjs";
+import {
+  ICategoryDataType,
+  IGetMonthlySummaryResponseDto,
+  IMonthSummaryDataDto,
+  ITransactionSummaryResponseDto,
+} from "@/services/dto/types";
+import Forward from "@/assets/Forward.svg";
+import Back from "@/assets/Back.svg";
+import { useUserStore } from "@/lib/zustand/store/useUserStore";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import Card from "@/components/Card";
+import Typography from "@/components/Typography";
+import {
+  barChartDisplayOptions,
+  barChartOptions,
+  donutChartOptions,
+  donutDisplayOptions,
+} from "./const";
+import { IParentHistoryType } from "@/components/AddHistory/types";
+import CategoryIcon from "@/components/CategoryIcon";
+import Skeleton from "@/components/Skeleton";
+import { fetchWithAuth } from "@/utils/fetch/fetchWithAuth";
+
+ChartJS.register(
+  ArcElement,
+  LinearScale,
+  CategoryScale,
+  BarElement,
+  Tooltip,
+  Legend,
+  Title,
+  Tooltip,
+  Legend
+);
+
+const SummaryPage = () => {
+  const [date, setDate] = useState(dayjs().toDate());
+  const currentDate = dayjs(date).format("YYYY-MM-DD");
+  const id = useUserStore((state) => state.user).id;
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { data: monthTransactionSummary, isLoading: summaryLoading } =
+    useQuery<ITransactionSummaryResponseDto>({
+      queryKey: ["getMonthTransactionSummary", id, currentDate],
+      queryFn: async () => {
+        const res = await fetchWithAuth(
+          `/api/transaction/summary?id=${id}&date=${date}`
+        );
+        if (!res.ok) throw new Error("Network response was not ok");
+        const data = await res.json();
+        return data;
+      },
+      enabled: !!id,
+    });
+
+  const { data: monthlyData, isLoading: getMonthlySummaryLoading } =
+    useQuery<IGetMonthlySummaryResponseDto>({
+      queryKey: ["getMonthlySummary", id],
+      queryFn: async () => {
+        const res = await fetchWithAuth(
+          `/api/transaction/getMonthlySummary?id=${id}`
+        );
+        if (!res.ok) throw new Error("Network response was not ok");
+        const data = await res.json();
+        return data;
+      },
+      enabled: !!id,
+    });
+
+  const {
+    data: getAllTransactionData,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    initialPageParam: 1,
+    queryKey: ["transactions", id, date],
+    queryFn: async ({ pageParam }) => {
+      const res = await fetchWithAuth(
+        `/api/transaction/list?id=${id}&page=${pageParam}&limit=5&date=${date}`
+      );
+      if (!res.ok) throw new Error("Network response was not ok");
+      const data = await res.json();
+      return data;
+    },
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.hasMore ? allPages.length + 1 : undefined;
+    },
+    initialData: { pages: [], pageParams: [] },
+    staleTime: 0,
+    enabled: !!id,
+  });
+
+  const barRecentMonths = Array.from({ length: 5 }, (_, i) =>
+    dayjs(date)
+      .subtract(4 - i, "month")
+      .format("YYYY-MM")
+  );
+
+  const barChartData = () => {
+    const barData: number[] = [];
+    if (monthlyData) {
+      barRecentMonths.forEach((month) => {
+        const match = monthlyData?.data.find(
+          (item: IMonthSummaryDataDto) =>
+            dayjs(item.year_month).format("YYYY-MM") === month
+        );
+        const data = match ? match.expense : 0;
+        barData.push(data);
+      });
+    }
+    return barData;
+  };
+
+  const handleDateChange = (type: string) => {
+    if (type === "BACK") {
+      setDate(dayjs(date).add(-1, "month").toDate());
+    } else {
+      setDate(dayjs(date).add(1, "month").toDate());
+    }
+  };
+
+  const labelConvert = (type: string) => {
+    switch (type) {
+      case "FOOD":
+        return "식비";
+      case "BUS":
+        return "교통";
+      case "PAY":
+        return "월급";
+      case "SAVE":
+        return "저축";
+      case "ETC":
+        return "기타";
+      case "SHOPPING":
+        return "쇼핑";
+    }
+  };
+
+  useEffect(() => {
+    if (!summaryLoading && !getMonthlySummaryLoading) setIsLoading(false);
+  }, [summaryLoading, getMonthlySummaryLoading]);
+
+  return (
+    <Card>
+      <div className={st.container}>
+        <div className={st.dateContainer}>
+          <button
+            className={st.iconBtn}
+            onClick={() => handleDateChange("BACK")}
+          >
+            <Back />
+          </button>
+          <div>
+            <Typography variant="title">
+              {dayjs(date).format("YYYY년 MM월")}
+            </Typography>
+          </div>
+          <button
+            className={st.iconBtn}
+            onClick={() => handleDateChange("FORWARD")}
+          >
+            <Forward />
+          </button>
+        </div>
+        <div className={st.summaryBox}>
+          <p className={st.title}>이번달 요약</p>
+          <div className={st.flexWrap}>
+            <p className={st.subText}>총 수입</p>
+            <Skeleton loading={isLoading} width={80} height={20}>
+              <Typography color="green">
+                ₩ {monthTransactionSummary?.incomeAmount.toLocaleString() ?? 0}
+              </Typography>
+            </Skeleton>
+          </div>
+          <div className={st.flexWrap}>
+            <p className={st.subText}>총 지출</p>
+            <Skeleton loading={isLoading} width={80} height={20}>
+              <Typography color="red">
+                ₩ {monthTransactionSummary?.expenseAmount.toLocaleString() ?? 0}
+              </Typography>
+            </Skeleton>
+          </div>
+          <div className={`${st.flexWrap} ${st.borderTop}`}>
+            <p className={st.subText}>잔액</p>
+            <Skeleton loading={isLoading} width={80} height={20}>
+              <Typography>
+                ₩{" "}
+                {(monthTransactionSummary &&
+                  (
+                    monthTransactionSummary?.incomeAmount -
+                    monthTransactionSummary?.expenseAmount
+                  ).toLocaleString()) ??
+                  0}
+              </Typography>
+            </Skeleton>
+          </div>
+        </div>
+        <div className={st.expenseCategoryContainer}>
+          <p className={st.title}>이번달 지출 카테고리</p>
+          <div className={st.expenseCategoryChart}>
+            <Skeleton loading={isLoading} height={150}>
+              <div className={st.chartWrap}>
+                {monthTransactionSummary &&
+                  monthTransactionSummary?.categoryData.length > 0 && (
+                    <Doughnut
+                      data={{
+                        labels: monthTransactionSummary?.categoryData.map(
+                          (item: ICategoryDataType) => {
+                            if (item.type === "PAY") return;
+                            return labelConvert(item.type);
+                          }
+                        ),
+                        datasets: [
+                          {
+                            data: [
+                              ...monthTransactionSummary?.categoryData.map(
+                                (item: ICategoryDataType) => {
+                                  if (item.type === "PAY") return;
+                                  return item.amount;
+                                }
+                              ),
+                            ],
+                            ...donutChartOptions,
+                          },
+                        ],
+                      }}
+                      options={donutDisplayOptions}
+                    />
+                  )}
+              </div>
+            </Skeleton>
+            <div className={st.legendContainer}>
+              {monthTransactionSummary?.categoryData.map(
+                (item: ICategoryDataType, idx: number) => (
+                  <div key={item.type} className={st.legendLabelWrap}>
+                    <div className={st.legendTitleWrap}>
+                      <div
+                        style={{
+                          width: 12,
+                          height: 12,
+                          backgroundColor:
+                            donutChartOptions.backgroundColor[idx],
+                        }}
+                      />
+                      <span>{labelConvert(item.type)}</span>
+                    </div>
+                    <span>₩ {item.amount.toLocaleString()}</span>
+                  </div>
+                )
+              )}
+            </div>
+          </div>
+        </div>
+        <div className={st.trendGap}>
+          <div>
+            <p className={st.title}>최근 5개월 지출 트렌드</p>
+          </div>
+          <Skeleton loading={isLoading} height={150}>
+            <Bar
+              data={{
+                labels: barRecentMonths,
+                datasets: [
+                  {
+                    data: barChartData(),
+                    ...barChartOptions,
+                  },
+                ],
+              }}
+              options={barChartDisplayOptions}
+            />
+          </Skeleton>
+        </div>
+        <div className={st.historyContainer}>
+          <p className={st.title}>최근 내역</p>
+          <div className={st.historyWrap}>
+            <Skeleton loading={isLoading} height={20}>
+              {getAllTransactionData &&
+                getAllTransactionData?.pages.map(
+                  (transaction: { data: IParentHistoryType[] }, idx) => (
+                    <React.Fragment key={idx}>
+                      {transaction &&
+                        transaction?.data.map((history, idx) => (
+                          <div
+                            key={idx}
+                            className={`${st.historyDetail} ${st.historyBottomLine}`}
+                          >
+                            <div className={st.historyTitleAndDate}>
+                              <span>
+                                {dayjs(history.date).format("MM월 DD일")}
+                              </span>
+                              <span>
+                                <CategoryIcon variant={history.category} />
+                              </span>
+                            </div>
+                            <span
+                              className={
+                                history.category !== "PAY"
+                                  ? st.expense
+                                  : st.income
+                              }
+                            >
+                              ₩ {history.amount.toLocaleString()}
+                            </span>
+                          </div>
+                        ))}
+                    </React.Fragment>
+                  )
+                )}
+            </Skeleton>
+            <div className={st.historyBtnContainer}>
+              <button
+                className={st.historyBtn}
+                onClick={() => fetchNextPage()}
+                disabled={!hasNextPage || isFetchingNextPage}
+              >
+                더 보기
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
+  );
+};
+
+export default SummaryPage;

@@ -1,0 +1,33 @@
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 120px 0 140px;
+  gap: 32px;
+}
+
+.logoContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 42px;
+  align-items: center;
+}
+
+.logo {
+  border-radius: 50%;
+}
+
+.loginTitleWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.loginBtn {
+  background-color: inherit;
+  border: none;
+}

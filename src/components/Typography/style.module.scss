@@ -1,0 +1,56 @@
+.headerTitle {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.subTitle {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.body {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.small {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.black {
+  color: var(--text-title);
+}
+
+.sub {
+  color: var(--text);
+}
+
+.gray {
+  color: var(--text-gray);
+}
+
+.green {
+  color: var(--text-green);
+}
+
+.red {
+  color: var(--text-red);
+}
+
+.white {
+  color: white;
+}
+
+.point {
+  color: var(--point);
+}

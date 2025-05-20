@@ -1,0 +1,27 @@
+@use "@/styles/_mixin" as *;
+
+.container {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  box-shadow: var(--shadow-reverse);
+  background-color: white;
+}
+
+.menuBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100%;
+  padding: 20px 0;
+}
+
+.select {
+  & > svg {
+    fill: var(--primary);
+  }
+}
