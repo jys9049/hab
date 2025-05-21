@@ -42,7 +42,7 @@ const UserInitializer = () => {
     };
 
     initUser();
-  }, [hasMounted, pathname, stopLoginLoading]);
+  }, [hasMounted, pathname]);
 
   return null;
 };

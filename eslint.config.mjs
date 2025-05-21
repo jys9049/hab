@@ -15,6 +15,7 @@ const eslintConfig = [
     files: ["**/*.ts", "**/*.tsx"],
     rules: {
       "@typescript-eslint/no-explicit-any": "off", // any 허용
+      "react-hooks/exhaustive-deps": "off", //useEffect 관련 의존성 배열 경고 X
     },
   },
 ];
