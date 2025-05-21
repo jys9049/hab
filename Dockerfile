@@ -8,6 +8,8 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm install
 
+COPY .env .env
+
 # 4. Next.js 코드 복사
 COPY . .
 
