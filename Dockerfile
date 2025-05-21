@@ -8,8 +8,6 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm install
 
-COPY .env .env
-
 # 4. Next.js 코드 복사
 COPY . .
 
@@ -20,4 +18,4 @@ RUN npm run build
 EXPOSE 3000
 
 # 7. 앱 실행
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]
