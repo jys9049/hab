@@ -4,7 +4,7 @@ services:
   web:
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: Dockerfile
     container_name: hab
     environment:
       - NODE_ENV=production
