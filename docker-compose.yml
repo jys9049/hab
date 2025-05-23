@@ -9,7 +9,7 @@ services:
     environment:
       - NODE_ENV=production
     env_file:
-      - ./app.env
+      - app.env
     expose:
       - "3000"
     volumes:
