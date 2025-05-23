@@ -11,4 +11,12 @@ const server_supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
+if (supabase) {
+  throw new Error("supabase를 불러오는데 실패하였습니다 (client).");
+}
+
+if (server_supabase) {
+  throw new Error("supabase를 불러오는데 실패하였습니다 (server).");
+}
+
 export { supabase, server_supabase };

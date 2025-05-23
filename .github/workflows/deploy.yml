@@ -34,15 +34,6 @@ jobs:
           ssh-keyscan -H "${{ env.EC2_HOST }}" >> ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts # 권한 문제 방지
 
-
-          SUPABASE_URL_FROM_WORKFLOW_ENV="${{ secrets.SUPABASE_URL }}"
-
-          if [ -n "$SUPABASE_URL_FROM_WORKFLOW_ENV" ]; then
-            echo "NEXT_PUBLIC_SUPABASE_URL in workflow env: IS SET (length: ${#SUPABASE_URL_FROM_WORKFLOW_ENV})"
-          else
-            echo "NEXT_PUBLIC_SUPABASE_URL in workflow env: IS NOT SET or EMPTY! Check GitHub Secret name and value."
-          fi
-
           echo "Executing deployment script on EC2..." 
           ssh -T ${{ env.EC2_USERNAME }}@${{ env.EC2_HOST }} << 'EOF'
             set -e
