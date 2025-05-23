@@ -19,6 +19,7 @@ COPY package*.json ./
 RUN npm ci
 COPY . .
 RUN rm -rf .next
+RUN npm run build
 
 # runner
 FROM node:18-alpine AS runner
