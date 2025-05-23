@@ -54,17 +54,14 @@ jobs:
             echo "KAKAO_REDIRECT_URI=${{ secrets.KAKAO_REDIRECT_URI }}" >> app.env
             echo "KAKAO_SECRET_KEY=${{ secrets.KAKAO_SECRET_KEY }}" >> app.env
             echo "SUPABASE_SERVICE_ROLE_KEY=${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" >> app.env
-            echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" >> app.env
-            
+            echo "NEXT_PUBLIC_BASE_URL=${{ secrets.NEXT_PUBLIC_BASE_URL }}" >> app.env
+            echo "NEXT_PUBLIC_KAKAO_INTERGRITY=${{ secrets.NEXT_PUBLIC_KAKAO_INTERGRITY }}" >> app.env
+            echo "NEXT_PUBLIC_KAKAO_JS_KEY=${{ secrets.NEXT_PUBLIC_KAKAO_JS_KEY }}" >> app.env
+            echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" >> app.env
+            echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}" >> app.env            
             echo "Building Docker images (web service specifically)..."
 
-            sudo docker compose build --no-cache \
-              --build-arg BUILD_ARG_NEXT_PUBLIC_BASE_URL="${{env.NEXT_PUBLIC_BASE_URL}}" \
-              --build-arg BUILD_ARG_NEXT_PUBLIC_KAKAO_INTERGRITY="${{env.NEXT_PUBLIC_KAKAO_INTERGRITY}}" \
-              --build-arg BUILD_ARG_NEXT_PUBLIC_KAKAO_JS_KEY="${{env.NEXT_PUBLIC_KAKAO_JS_KEY}}" \
-              --build-arg BUILD_ARG_NEXT_PUBLIC_SUPABASE_ANON_KEY="${{env.NEXT_PUBLIC_SUPABASE_ANON_KEY}}" \
-              --build-arg BUILD_ARG_NEXT_PUBLIC_SUPABASE_URL="${{env.NEXT_PUBLIC_SUPABASE_URL}}" \
-            web
+            sudo docker compose build --no-cache 
             
             echo "Stopping and recreating services..."
             sudo docker compose down -v
