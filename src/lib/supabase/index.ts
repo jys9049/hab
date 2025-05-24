@@ -1,5 +1,8 @@
 import { createClient } from "@supabase/supabase-js";
 
+console.log("supabase test");
+console.log(process.env.SUPABSE_URL);
+
 // 서버 전용 Supabase 클라이언트
 const supabase = createClient(
   process.env.SUPABASE_URL!,
