@@ -1,14 +1,18 @@
 import { supabase } from "@/lib/supabase";
 import { TUserType } from "@/lib/zustand/store/useUserStore";
 import { decode } from "jsonwebtoken";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
+    if (!supabase) {
+      NextResponse.next();
+    }
+
     const token = req.cookies.get("accessToken");
 
     if (!token) {
-      return Response.json("AccessToken이 만료되었습니다.", {
+      return NextResponse.json("AccessToken이 만료되었습니다.", {
         status: 401,
       });
     }
@@ -31,10 +35,10 @@ export async function GET(req: NextRequest) {
       profile_img: data.profile_img,
     };
 
-    return Response.json({ data: resData }, { status: 200 });
+    return NextResponse.json({ data: resData }, { status: 200 });
   } catch (e) {
     console.error(e);
-    return Response.json(
+    return NextResponse.json(
       { message: "로그인에 실패하였습니다" },
       { status: 500 }
     );

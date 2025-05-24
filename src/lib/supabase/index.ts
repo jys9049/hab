@@ -5,14 +5,8 @@ const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
 let server_supabase: SupabaseClient;
 
-if (
-  process.env.NODE_ENV === "production" &&
-  supabaseUrl &&
-  supabaseServiceRoleKey
-) {
+if (supabaseUrl && supabaseServiceRoleKey) {
   server_supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
-} else {
-  server_supabase = createClient("", "");
 }
 
 export { server_supabase as supabase };

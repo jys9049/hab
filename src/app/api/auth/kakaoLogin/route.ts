@@ -17,6 +17,10 @@ export interface IKakaoTokenResponseType {
 
 export async function POST(request: NextRequest) {
   try {
+    if (!supabase) {
+      NextResponse.next();
+    }
+
     const req = await request.json();
     const code = req.code;
 

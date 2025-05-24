@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabase";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -11,9 +11,13 @@ dayjs.extend(timezone);
 const categories = ["FOOD", "BUS", "PAY", "SAVE", "ETC", "SHOPPING"];
 
 export async function GET(request: NextRequest) {
+  if (!supabase) {
+    NextResponse.next();
+  }
+
   const token = request.cookies.get("accessToken");
   if (!token) {
-    return Response.json("AccessToken이 만료되었습니다.", {
+    return NextResponse.json("AccessToken이 만료되었습니다.", {
       status: 401,
     });
   }
@@ -68,7 +72,7 @@ export async function GET(request: NextRequest) {
     );
 
     if (!error) {
-      return Response.json(
+      return NextResponse.json(
         {
           data: data,
           incomeAmount: incomeAmount,
@@ -79,10 +83,16 @@ export async function GET(request: NextRequest) {
         { status: 200 }
       );
     } else {
-      return Response.json({ message: "데이터가 없습니다." }, { status: 400 });
+      return NextResponse.json(
+        { message: "데이터가 없습니다." },
+        { status: 400 }
+      );
     }
   } catch (err) {
     console.error(err);
-    return Response.json({ message: "데이터가 없습니다." }, { status: 400 });
+    return NextResponse.json(
+      { message: "데이터가 없습니다." },
+      { status: 400 }
+    );
   }
 }

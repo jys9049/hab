@@ -1,13 +1,17 @@
 import { supabase } from "@/lib/supabase";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import dayjs from "dayjs";
 
 const categories = ["FOOD", "BUS", "PAY", "SAVE", "ETC", "SHOPPING"];
 
 export async function GET(request: NextRequest) {
+  if (!supabase) {
+    NextResponse.next();
+  }
+
   const token = request.cookies.get("accessToken");
   if (!token) {
-    return Response.json("AccessToken이 만료되었습니다.", {
+    return NextResponse.json("AccessToken이 만료되었습니다.", {
       status: 401,
     });
   }
@@ -27,7 +31,7 @@ export async function GET(request: NextRequest) {
     .lte("date", endOfMonth);
 
   if (error) {
-    return Response.json({ message: "불러오기 실패" }, { status: 400 });
+    return NextResponse.json({ message: "불러오기 실패" }, { status: 400 });
   }
 
   const income = data.filter((item) => item.category === "PAY");
@@ -41,7 +45,7 @@ export async function GET(request: NextRequest) {
     amount: sum(data.filter((item) => item.category === type)),
   }));
 
-  return Response.json({
+  return NextResponse.json({
     incomeAmount: sum(income),
     expenseAmount: sum(expense),
     expenseLength: expense.length,

@@ -3,9 +3,13 @@ import { decode, JwtPayload } from "jsonwebtoken";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
+  if (!supabase) {
+    NextResponse.next();
+  }
+
   const token = request.cookies.get("accessToken");
   if (!token) {
-    return Response.json("AccessToken이 만료되었습니다.", {
+    return NextResponse.json("AccessToken이 만료되었습니다.", {
       status: 401,
     });
   }
