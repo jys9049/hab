@@ -8,6 +8,8 @@ import st from "./styles.module.scss";
 import Typography from "@/components/Typography";
 
 const LoginPage = () => {
+  console.log(process.env.NEXT_PUBLIC_BASE_URL);
+
   const login = () => {
     if (window.Kakao) {
       window.Kakao.Auth.authorize({
