@@ -1,16 +1,18 @@
-import { createClient } from "@supabase/supabase-js";
+import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
-console.log("supabase test");
-console.log(process.env.SUPABASE_URL);
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
-// 서버 전용 Supabase 클라이언트
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+let server_supabase: SupabaseClient;
 
-if (!supabase) {
-  throw new Error("supabase를 불러오는데 실패하였습니다 (server).");
+if (
+  process.env.NODE_ENV === "production" &&
+  supabaseUrl &&
+  supabaseServiceRoleKey
+) {
+  server_supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
+} else {
+  server_supabase = createClient("", "");
 }
 
-export { supabase };
+export { server_supabase as supabase };
