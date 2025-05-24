@@ -86,6 +86,7 @@ export async function middleware(request: NextRequest) {
         return loginRedirect;
       }
     } catch (error) {
+      console.error(error);
       const loginRedirect = NextResponse.redirect(new URL("/login", baseUrl));
       loginRedirect.cookies.delete("accessToken");
       loginRedirect.cookies.delete("refreshToken");
