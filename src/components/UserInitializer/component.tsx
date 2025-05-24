@@ -3,12 +3,13 @@
 import useLoadingStore from "@/lib/zustand/store/useLoadingStore";
 import { useUserStore } from "@/lib/zustand/store/useUserStore";
 import { fetchWithAuth } from "@/utils/fetch/fetchWithAuth";
+import { getCookie } from "cookies-next";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const UserInitializer = () => {
   const pathname = usePathname();
-  const userStore = useUserStore((state) => state);
+  const setUser = useUserStore((state) => state.setUser);
   const { startLoginLoading, stopLoginLoading } = useLoadingStore();
 
   const [hasMounted, setHasMounted] = useState(false);
@@ -24,10 +25,14 @@ const UserInitializer = () => {
       startLoginLoading();
 
       try {
+        const accessToken = getCookie("accessToken");
+
+        if (!accessToken) return;
+
         const res = await fetchWithAuth("/api/auth/getUser");
         if (res.ok) {
           const responseData = await res.json();
-          userStore.setUser({
+          setUser({
             id: responseData.data.id,
             nickname: responseData.data.nickname,
             email: responseData.data.email,

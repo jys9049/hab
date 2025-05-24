@@ -31,6 +31,7 @@ export async function fetchWithAuth(
   init?: RequestInit
 ): Promise<Response> {
   let accessToken = getCookie("accessToken");
+  const refreshToken = getCookie("refreshToken");
 
   let res = await fetch(req, {
     ...init,
@@ -40,7 +41,7 @@ export async function fetchWithAuth(
     },
   });
 
-  if (res.status === 401) {
+  if (res.status === 401 && !!refreshToken) {
     accessToken = (await refreshAccessToken()) as string;
 
     res = await fetch(req, {

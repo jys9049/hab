@@ -1,91 +1,99 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export async function middleware(request: NextRequest) {
-  let accessToken = request.cookies.get("accessToken")?.value;
-  const refreshToken = request.cookies.get("refreshToken")?.value;
+const publicPaths = ["/login", "/oauth"]; // 인증 불필요 경로
 
-  if (!accessToken && refreshToken) {
-    const reissuedToken = await fetch(
-      `${process.env.BASE_URL}/api/auth/refresh`,
-      {
+export async function middleware(request: NextRequest) {
+  const { pathname, searchParams } = request.nextUrl;
+  const accessToken = request.cookies.get("accessToken")?.value;
+  const refreshToken = request.cookies.get("refreshToken")?.value;
+  const baseUrl = process.env.BASE_URL;
+
+  const isPublic = publicPaths.some((path) => pathname.startsWith(path));
+  if (isPublic) {
+    if (pathname === "/oauth/kakao/redirect") {
+      const newAccessTokenFromKakao = searchParams.get("accessToken");
+      const newRefreshTokenFromKakao = searchParams.get("refreshToken");
+
+      if (!newAccessTokenFromKakao || !newRefreshTokenFromKakao) {
+        console.error(
+          "[Middleware] Kakao redirect missing tokens. Redirecting to login."
+        );
+        return NextResponse.redirect(new URL("/login", baseUrl));
+      }
+
+      const response = NextResponse.redirect(new URL("/", baseUrl));
+      response.cookies.set("accessToken", newAccessTokenFromKakao, {
+        httpOnly: false,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: 15 * 60,
+        path: "/",
+      });
+      response.cookies.set("refreshToken", newRefreshTokenFromKakao, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: 7 * 24 * 60 * 60,
+        path: "/",
+      });
+      return response;
+    }
+
+    return NextResponse.next();
+  }
+
+  if (!accessToken) {
+    if (!refreshToken) {
+      return NextResponse.redirect(new URL("/login", baseUrl));
+    }
+
+    try {
+      const refreshResponse = await fetch(`${baseUrl}/api/auth/refresh`, {
         method: "POST",
-        credentials: "include",
         headers: {
           "Content-Type": "application/json",
           cookie: `refreshToken=${refreshToken}`,
         },
-      }
-    )
-      .then(async (res) => {
-        const data = await res.json();
-        return data.data;
-      })
-      .catch((error) => {
-        console.error("error", error);
-        return NextResponse.redirect(`${process.env.BASE_URL}/login`);
       });
 
-    accessToken = reissuedToken as string;
+      if (!refreshResponse.ok) {
+        console.error(
+          `[Middleware] Failed to refresh token (status: ${refreshResponse.status}). Redirecting to login for path: ${pathname}`
+        );
+        const loginRedirect = NextResponse.redirect(new URL("/login", baseUrl));
+        loginRedirect.cookies.delete("accessToken");
+        loginRedirect.cookies.delete("refreshToken");
+        return loginRedirect;
+      }
 
-    const response = NextResponse.next();
-    response.cookies.set({
-      httpOnly: false,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      name: "accessToken",
-      value: accessToken,
-      maxAge: 15 * 60,
-      path: "/",
-    });
+      const refreshedData = await refreshResponse.json();
+      const newAccessToken = refreshedData.data?.accessToken;
 
-    return response;
-  }
-
-  if (request.nextUrl.pathname === "/oauth/kakao/redirect") {
-    const searchParams = request.nextUrl.searchParams;
-
-    const accessToken = searchParams.get("accessToken");
-    const refreshToken = searchParams.get("refreshToken");
-
-    if (!accessToken || !refreshToken) return NextResponse.next();
-    else if (!accessToken && refreshToken) {
-      await fetch("/api/auth/refresh")
-        .then(async (res) => {
-          const data = await res.json();
-          return data;
-        })
-        .catch((error) => {
-          console.error(error);
-          return NextResponse.redirect("/login");
+      if (newAccessToken) {
+        const response = NextResponse.next();
+        response.cookies.set("accessToken", newAccessToken, {
+          httpOnly: false,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "lax",
+          maxAge: 15 * 60,
+          path: "/",
         });
+        return response;
+      } else {
+        const loginRedirect = NextResponse.redirect(new URL("/login", baseUrl));
+        loginRedirect.cookies.delete("refreshToken");
+        return loginRedirect;
+      }
+    } catch (error) {
+      const loginRedirect = NextResponse.redirect(new URL("/login", baseUrl));
+      loginRedirect.cookies.delete("accessToken");
+      loginRedirect.cookies.delete("refreshToken");
+      return loginRedirect;
     }
-
-    const response = NextResponse.next();
-    response.cookies.set({
-      httpOnly: false,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      name: "accessToken",
-      value: accessToken,
-      maxAge: 15 * 60,
-      path: "/",
-    });
-
-    response.cookies.set({
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      name: "refreshToken",
-      value: refreshToken,
-      maxAge: 7 * 24 * 60 * 60,
-      path: "/",
-    });
-
-    return response;
-  } else {
-    NextResponse.next();
   }
+
+  return NextResponse.next(); // 요청 계속 진행
 }
 
 export const config = {
