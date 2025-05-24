@@ -28,12 +28,6 @@ jobs:
           NEXT_PUBLIC_KAKAO_JS_KEY: ${{ secrets.NEXT_PUBLIC_KAKAO_JS_KEY }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-          JWT_ACCESS_SECRET: ${{ secrets.JWT_ACCESS_SECRET }}
-          JWT_REFRESH_SECRET: ${{ secrets.JWT_REFRESH_SECRET }}
-          KAKAO_CLIENT_ID: ${{ secrets.KAKAO_CLIENT_ID }}
-          KAKAO_SECRET_KEY: ${{ secrets.KAKAO_SECRET_KEY }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
         run: |
           echo "Setting up SSH known_hosts"
           mkdir -p ~/.ssh
@@ -54,23 +48,23 @@ jobs:
             
             echo "Creating/Updating .env file for runtime..."
             echo "${{ env.ENV_FILE_CONTENT }}" > app.env 
-            echo "BASE_URL=${{ env.BASE_URL }}" >> app.env
-            echo "JWT_ACCESS_SECRET=${{ env.JWT_ACCESS_SECRET }}" >> app.env
-            echo "JWT_REFRESH_SECRET=${{ env.JWT_REFRESH_SECRET }}" >> app.env
-            echo "KAKAO_CLIENT_ID=${{ env.KAKAO_CLIENT_ID }}" >> app.env
-            echo "KAKAO_REDIRECT_URI=${{ env.KAKAO_REDIRECT_URI }}" >> app.env
-            echo "KAKAO_SECRET_KEY=${{ env.KAKAO_SECRET_KEY }}" >> app.env
-            echo "SUPABASE_SERVICE_ROLE_KEY=${{ env.SUPABASE_SERVICE_ROLE_KEY }}" >> app.env
-            echo "SUPABASE_URL=${{ env.SUPABASE_URL }}" >> app.env
+            echo "BASE_URL=${{ secrets.BASE_URL }}" >> app.env
+            echo "JWT_ACCESS_SECRET=${{ secrets.JWT_ACCESS_SECRET }}" >> app.env
+            echo "JWT_REFRESH_SECRET=${{ secrets.JWT_REFRESH_SECRET }}" >> app.env
+            echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}" >> app.env
+            echo "KAKAO_REDIRECT_URI=${{ secrets.KAKAO_REDIRECT_URI }}" >> app.env
+            echo "KAKAO_SECRET_KEY=${{ secrets.KAKAO_SECRET_KEY }}" >> app.env
+            echo "SUPABASE_SERVICE_ROLE_KEY=${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" >> app.env
+            echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" >> app.env
             
             echo "Building Docker images (web service specifically)..."
 
             sudo docker compose build --no-cache \
-              --build-arg NEXT_PUBLIC_BASE_URL="${{env.NEXT_PUBLIC_BASE_URL}}" \
-              --build-arg NEXT_PUBLIC_KAKAO_INTERGRITY="${{env.NEXT_PUBLIC_KAKAO_INTERGRITY}}" \
-              --build-arg NEXT_PUBLIC_KAKAO_JS_KEY="${{env.NEXT_PUBLIC_KAKAO_JS_KEY}}" \
-              --build-arg NEXT_PUBLIC_SUPABASE_ANON_KEY="${{env.NEXT_PUBLIC_SUPABASE_ANON_KEY}}" \
-              --build-arg NEXT_PUBLIC_SUPABASE_URL="${{env.NEXT_PUBLIC_SUPABASE_URL}}" \
+              --build-arg BUILD_ARG_NEXT_PUBLIC_BASE_URL="${{env.NEXT_PUBLIC_BASE_URL}}" \
+              --build-arg BUILD_ARG_NEXT_PUBLIC_KAKAO_INTERGRITY="${{env.NEXT_PUBLIC_KAKAO_INTERGRITY}}" \
+              --build-arg BUILD_ARG_NEXT_PUBLIC_KAKAO_JS_KEY="${{env.NEXT_PUBLIC_KAKAO_JS_KEY}}" \
+              --build-arg BUILD_ARG_NEXT_PUBLIC_SUPABASE_ANON_KEY="${{env.NEXT_PUBLIC_SUPABASE_ANON_KEY}}" \
+              --build-arg BUILD_ARG_NEXT_PUBLIC_SUPABASE_URL="${{env.NEXT_PUBLIC_SUPABASE_URL}}" \
             web
             
             echo "Stopping and recreating services..."
