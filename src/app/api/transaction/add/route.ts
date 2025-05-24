@@ -1,4 +1,4 @@
-import { server_supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase";
 import { decode, JwtPayload } from "jsonwebtoken";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
   const req = await request.json();
 
   if (!accessToken) return;
-  const { data } = await server_supabase
+  const { data } = await supabase
     .from("transactions")
     .insert({
       user_id: accessToken.id,

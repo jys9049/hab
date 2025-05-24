@@ -1,4 +1,4 @@
-import { server_supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase";
 import { TUserType } from "@/lib/zustand/store/useUserStore";
 import { decode } from "jsonwebtoken";
 import { NextRequest } from "next/server";
@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
     }
 
     const userInfo = decode(token.value) as TUserType;
-    const { data, error } = await server_supabase
+    const { data, error } = await supabase
       .from("users")
       .select("*")
       .eq("id", userInfo.id)

@@ -1,4 +1,4 @@
-import { server_supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase";
 import { NextRequest } from "next/server";
 
 import dayjs from "dayjs";
@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
     const utcStart = kstStart.utc().toISOString();
     const utcEnd = kstEnd.utc().toISOString();
 
-    const { data, error } = await server_supabase
+    const { data, error } = await supabase
       .from("transactions")
       .select("*")
       .eq("user_id", id)

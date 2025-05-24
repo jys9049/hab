@@ -1,4 +1,4 @@
-import { server_supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase";
 import { NextRequest } from "next/server";
 
 import dayjs from "dayjs";
@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
     const id = searchParams.get("id");
 
-    const { data, error } = await server_supabase.rpc("get_monthly_summary", {
+    const { data, error } = await supabase.rpc("get_monthly_summary", {
       user_id: id,
     });
 

@@ -1,4 +1,4 @@
-import { server_supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase";
 import { NextRequest } from "next/server";
 
 import dayjs from "dayjs";
@@ -18,13 +18,10 @@ export async function GET(request: NextRequest) {
     const id = searchParams.get("id");
     const date = searchParams.get("date");
 
-    const { data, error } = await server_supabase.rpc(
-      "get_daily_summary_by_month",
-      {
-        user_id: id,
-        year_month: dayjs(date).format("YYYY-MM"),
-      }
-    );
+    const { data, error } = await supabase.rpc("get_daily_summary_by_month", {
+      user_id: id,
+      year_month: dayjs(date).format("YYYY-MM"),
+    });
 
     if (!error) {
       return Response.json(

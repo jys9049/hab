@@ -1,4 +1,4 @@
-import { server_supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase";
 import dayjs from "dayjs";
 import { NextRequest } from "next/server";
 
@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
   const startDate = dayjs(date).startOf("month").format("YYYY-MM-DD");
   const endDate = dayjs(date).endOf("month").format("YYYY-MM-DD");
 
-  const { data, error, count } = await server_supabase
+  const { data, error, count } = await supabase
     .from("transactions")
     .select("*", { count: "exact" }) // count 포함
     .eq("user_id", id)

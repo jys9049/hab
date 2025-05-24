@@ -1,5 +1,5 @@
 import { generateAccessToken, generateRefreshToken } from "@/lib/jwt";
-import { server_supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase";
 import { cookies } from "next/headers";
 
 import { NextRequest, NextResponse } from "next/server";
@@ -69,14 +69,14 @@ export async function POST(request: NextRequest) {
     const data2 = await kakaoUserInfoResponse.json();
     const { id, kakao_account } = data2;
 
-    let { data: user } = await server_supabase
+    let { data: user } = await supabase
       .from("users")
       .select("*")
       .eq("kakao_id", id)
       .single();
 
     if (!user) {
-      const { data: newUser } = await server_supabase
+      const { data: newUser } = await supabase
         .from("users")
         .insert({
           kakao_id: id,
