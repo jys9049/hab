@@ -1,0 +1,106 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 42px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & > button {
+    border: none;
+    background-color: inherit;
+
+    & > svg {
+      fill: black;
+    }
+  }
+}
+
+.contentWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.flexWrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 0;
+  box-sizing: border-box;
+}
+
+.btnWrap {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btn {
+  background-color: inherit;
+  padding: 8px 20px;
+  border-radius: 4px;
+}
+
+.editBtn {
+  border: 1px solid var(--chart-yellow);
+  background-color: var(--chart-yellow);
+}
+
+.deleteBtn {
+  border: 1px solid var(--text-red);
+  background-color: var(--text-red);
+}
+
+.inputContainer {
+  border-radius: 8px;
+  border: 1px solid var(--text-gray);
+  padding: 12px;
+  width: 200px;
+  height: 40px;
+  font-size: 18px;
+  box-sizing: border-box;
+}
+
+.amountInputContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--text-gray);
+  width: 200px;
+  height: 40px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.amountInput {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  box-sizing: border-box;
+  padding-left: 24px;
+  font-size: 18px;
+  color: var(--text-title);
+  border: none;
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.amountTitle {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text);
+  padding: 0px 14px 0 8px;
+  height: 70%;
+  line-height: 17px;
+}
