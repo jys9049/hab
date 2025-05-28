@@ -41,7 +41,7 @@ export async function fetchWithAuth(
     },
   });
 
-  if (res.status === 401 && !!refreshToken) {
+  if (res.status === 401 && !refreshToken) {
     accessToken = (await refreshAccessToken()) as string;
 
     res = await fetch(req, {
