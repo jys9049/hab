@@ -45,6 +45,7 @@ export async function middleware(request: NextRequest) {
 
   if (!accessToken) {
     if (!refreshToken) {
+      console.log("refreshToken null");
       return NextResponse.redirect(new URL("/login", baseUrl));
     }
 
@@ -68,7 +69,8 @@ export async function middleware(request: NextRequest) {
       }
 
       const refreshedData = await refreshResponse.json();
-      const newAccessToken = refreshedData.data?.accessToken;
+
+      const newAccessToken = refreshedData.data;
 
       if (newAccessToken) {
         const response = NextResponse.next();
