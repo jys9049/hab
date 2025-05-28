@@ -20,6 +20,7 @@ import Skeleton from "@/components/Skeleton";
 
 import { useUserStore } from "@/lib/zustand/store/useUserStore";
 import useLoadingStore from "@/lib/zustand/store/useLoadingStore";
+import HistoryDetail from "@/components/HistoryDetail";
 
 export interface IAllTransactionResponseType {
   categoryData: { type: string; amount: any }[];
@@ -39,13 +40,30 @@ export interface ITransactionResponseType {
 }
 
 export default function Home() {
+  const user = useUserStore((state) => state.user);
+  const queryClient = useQueryClient();
+  const { loginLoading } = useLoadingStore((state) => state);
+
   const [date, setDate] = useState(dayjs().toDate());
   const [isCalendarOpen, setIsOpenCalendar] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectHistory, setSelectHistory] = useState<IParentHistoryType | null>(
+    null
+  );
+  const [isHistoryDetailOpen, setIsHistoryDetailOpen] = useState(false);
 
-  const { loginLoading } = useLoadingStore((state) => state);
-  const user = useUserStore((state) => state.user);
-  const queryClient = useQueryClient();
+  const handleSelectClick = (history: IParentHistoryType) => {
+    setSelectHistory(history);
+  };
+
+  const handleHistoryDetailOpen = () => {
+    setIsHistoryDetailOpen(true);
+  };
+
+  const handleHistoryDetailClose = () => {
+    setSelectHistory(null);
+    setIsHistoryDetailOpen(false);
+  };
 
   const { data: transactionData, isLoading: transactionLoading } =
     useQuery<ITransactionResponseType>({
@@ -174,6 +192,10 @@ export default function Home() {
                           className={`${st.historyDetail} ${
                             idx !== 0 && st.historyTopLine
                           }`}
+                          onClick={() => {
+                            handleSelectClick(history);
+                            handleHistoryDetailOpen();
+                          }}
                         >
                           <div className={st.historyTitleAndDate}>
                             <span>{dayjs(history.date).format("HH:mm")}</span>
@@ -197,6 +219,12 @@ export default function Home() {
         </Card>
       </div>
       <AddHistory onSubmit={addTransactionMutation.mutate} date={date} />
+      <HistoryDetail
+        isOpen={isHistoryDetailOpen}
+        handleClose={handleHistoryDetailClose}
+        history={selectHistory}
+        date={date}
+      />
       <Calendar
         isOpen={isCalendarOpen}
         value={date}
