@@ -57,6 +57,7 @@ const CategoryIcon = ({
       </div>
       {showText && (
         <Typography
+          as="span"
           variant={size === "SMALL" ? "small" : "body"}
           color={color === "default" ? "gray" : "black"}
         >

@@ -1,5 +1,5 @@
 export interface ICategorySelectProps {
-  isOpen: boolean;
-  handleClose: () => void;
+  category?: string;
+  fullWidth?: boolean;
   handleClick: (category: string) => void;
 }
