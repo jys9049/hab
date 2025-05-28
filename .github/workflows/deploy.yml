@@ -1,9 +1,12 @@
 name: Deploy to EC2
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      version_tag:
+        required: false
+        default: "latest"
+      # 다른 필요한 입력값들을 추가할 수 있습니다.
 
 jobs:
   deploy:
