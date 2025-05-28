@@ -1,0 +1,34 @@
+.listWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  & > li {
+    margin-left: 20px;
+    list-style: disc;
+  }
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  padding-top: 12px;
+}
+
+.withdrawalBtn {
+  border: none;
+  background-color: var(--text-red);
+  color: white;
+  border-radius: 4px;
+  padding: 8px 20px;
+}
+
+.cancelBtn {
+  border: none;
+  background-color: var(--text-green);
+  color: white;
+  border-radius: 4px;
+  padding: 8px 20px;
+}
