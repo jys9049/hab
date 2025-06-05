@@ -30,28 +30,40 @@ export async function fetchWithAuth(
   req: RequestInfo,
   init?: RequestInit
 ): Promise<Response> {
-  let accessToken = getCookie("accessToken");
-  const refreshToken = getCookie("refreshToken");
+  const isServer = typeof window === "undefined";
 
-  let res = await fetch(req, {
-    ...init,
-    headers: {
-      ...init?.headers,
-      Authorization: accessToken ? `Bearer ${accessToken}` : "",
-    },
-  });
+  if (!isServer) {
+    let accessToken = getCookie("accessToken");
+    const refreshToken = getCookie("refreshToken");
 
-  if (res.status === 401 && !refreshToken) {
-    accessToken = (await refreshAccessToken()) as string;
-
-    res = await fetch(req, {
+    let res = await fetch(req, {
       ...init,
       headers: {
         ...init?.headers,
         Authorization: accessToken ? `Bearer ${accessToken}` : "",
       },
     });
-  }
 
-  return res;
+    if (res.status === 401 && !refreshToken) {
+      accessToken = (await refreshAccessToken()) as string;
+
+      res = await fetch(req, {
+        ...init,
+        headers: {
+          ...init?.headers,
+          Authorization: accessToken ? `Bearer ${accessToken}` : "",
+        },
+      });
+    }
+    return res;
+  } else {
+    const res = await fetch(`${process.env.BASE_URL}${req}`, {
+      ...init,
+      headers: {
+        ...init?.headers,
+      },
+      credentials: "include",
+    });
+    return res;
+  }
 }

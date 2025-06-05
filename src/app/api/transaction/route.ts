@@ -15,12 +15,17 @@ export async function GET(request: NextRequest) {
     NextResponse.next();
   }
 
-  const token = request.cookies.get("accessToken");
+  const token =
+    typeof window === "undefined"
+      ? request.headers.get("Authorization")
+      : request.cookies.get("accessToken");
+
   if (!token) {
     return NextResponse.json("AccessToken이 만료되었습니다.", {
       status: 401,
     });
   }
+
   try {
     const searchParams = request.nextUrl.searchParams;
     const id = searchParams.get("id");

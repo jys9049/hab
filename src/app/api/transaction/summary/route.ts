@@ -1,6 +1,9 @@
 import { supabase } from "@/lib/supabase";
 import { NextRequest, NextResponse } from "next/server";
+import utc from "dayjs/plugin/utc";
 import dayjs from "dayjs";
+
+dayjs.extend(utc);
 
 const categories = ["FOOD", "BUS", "PAY", "SAVE", "ETC", "SHOPPING"];
 
@@ -9,7 +12,11 @@ export async function GET(request: NextRequest) {
     NextResponse.next();
   }
 
-  const token = request.cookies.get("accessToken");
+  const token =
+    typeof window === "undefined"
+      ? request.headers.get("Authorization")
+      : request.cookies.get("accessToken");
+
   if (!token) {
     return NextResponse.json("AccessToken이 만료되었습니다.", {
       status: 401,
@@ -20,8 +27,8 @@ export async function GET(request: NextRequest) {
   const id = searchParams.get("id");
   const date = searchParams.get("date"); // YYYY-MM-DD
 
-  const startOfMonth = dayjs(date).startOf("month").format("YYYY-MM-DD");
-  const endOfMonth = dayjs(date).endOf("month").format("YYYY-MM-DD");
+  const startOfMonth = dayjs(date).utc().startOf("month").format("YYYY-MM-DD");
+  const endOfMonth = dayjs(date).utc().endOf("month");
 
   const { data, error } = await supabase
     .from("transactions")

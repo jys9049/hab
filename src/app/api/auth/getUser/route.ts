@@ -9,7 +9,10 @@ export async function GET(req: NextRequest) {
       NextResponse.next();
     }
 
-    const token = req.cookies.get("accessToken");
+    const token =
+      typeof window === "undefined"
+        ? req.headers.get("Authorization")?.replace("Bearer", "").trim()
+        : req.cookies.get("accessToken")?.value;
 
     if (!token) {
       return NextResponse.json("AccessToken이 만료되었습니다.", {
@@ -17,7 +20,7 @@ export async function GET(req: NextRequest) {
       });
     }
 
-    const userInfo = decode(token.value) as TUserType;
+    const userInfo = decode(token) as TUserType;
     const { data, error } = await supabase
       .from("users")
       .select("*")

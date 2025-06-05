@@ -163,6 +163,8 @@ const HistoryDetail = ({
                   id="amount"
                   className={st.amountInput}
                   placeholder="0"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
                   value={updateHistory ? updateHistory.amount : 0}
                   onChange={handleValueChange}
                 />

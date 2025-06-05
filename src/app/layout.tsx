@@ -15,6 +15,12 @@ import QueryProviders from "@/lib/tanstack/providers";
 import AppLayout from "@/components/AppLayout/component";
 import UserInitializer from "@/components/UserInitializer";
 import Script from "next/script";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
+import { getUser } from "@/services/api/server";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -27,12 +33,18 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   dayjs().locale("kr").format();
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ["getUser"],
+    queryFn: async () => await getUser(),
+  });
 
   return (
     <html lang="en">
@@ -40,14 +52,20 @@ export default function RootLayout({
         <QueryProviders>
           <div className={st.container}>
             <div className={st.logoImg}>
-              <Image src={logoImg} alt="mainImg" width={200} height={200} />
+              <Image
+                src={logoImg}
+                alt="mainImg"
+                width={200}
+                height={200}
+                priority={true}
+              />
             </div>
-            <div className={st.card}>
-              <AppLayout>
+            <AppLayout>
+              <HydrationBoundary state={dehydrate(queryClient)}>
                 <UserInitializer />
-                <div className={st.content}>{children}</div>
-              </AppLayout>
-            </div>
+              </HydrationBoundary>
+              <div className={st.content}>{children}</div>
+            </AppLayout>
           </div>
           <ToastContainer />
         </QueryProviders>

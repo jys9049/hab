@@ -1,7 +1,15 @@
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 
 export const currentYearAndMonth = () => {
   return dayjs().format("YYYY-MM");
+};
+
+export const formatAsIsoDate = (date: Dayjs) => {
+  return dayjs(date).format("YYYY-MM-DD");
+};
+
+export const formatAsDateTime = (date: Dayjs) => {
+  return dayjs(date).format("YYYY-MM-DDTHH:mm:ss");
 };
 
 export const addFormat = (date: string, format: string) => {

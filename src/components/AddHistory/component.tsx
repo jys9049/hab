@@ -12,6 +12,7 @@ import CalendarIcon from "@/assets/Calendar.svg";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
 import { IAddHistoryProps } from "./types";
+import { formatAsDateTime, formatAsIsoDate } from "@/utils/date";
 
 const AddHistory = ({ onSubmit, date }: IAddHistoryProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +20,7 @@ const AddHistory = ({ onSubmit, date }: IAddHistoryProps) => {
   const [value, setValue] = useState({
     amount: "",
     category: "FOOD",
-    date: date,
+    date: formatAsDateTime(dayjs(date)),
     time: {
       hour: "",
       minute: "",
@@ -51,7 +52,7 @@ const AddHistory = ({ onSubmit, date }: IAddHistoryProps) => {
         ...value,
         time: {
           ...value.time,
-          [id]: Number(inputValue) > 23 ? "59" : inputValue,
+          [id]: Number(inputValue) > 59 ? "59" : inputValue,
         },
       });
     } else {
@@ -65,6 +66,7 @@ const AddHistory = ({ onSubmit, date }: IAddHistoryProps) => {
 
   const handleClose = () => {
     setIsOpen(false);
+    setCategorySelect("FOOD");
     setValue({
       amount: "",
       category: "FOOD",
@@ -93,11 +95,13 @@ const AddHistory = ({ onSubmit, date }: IAddHistoryProps) => {
     if (!value.amount)
       return toast("금액을 입력해주세요.", { type: "error", autoClose: 500 });
 
-    const updateDate = dayjs(value.date)
-      .hour(value.time.hour ? Number(value.time.hour) : dayjs(date).hour())
-      .minute(
-        value.time.minute ? Number(value.time.minute) : dayjs(date).minute()
-      );
+    const updateDate = formatAsDateTime(
+      dayjs(value.date)
+        .hour(value.time.hour ? Number(value.time.hour) : dayjs(date).hour())
+        .minute(
+          value.time.minute ? Number(value.time.minute) : dayjs(date).minute()
+        )
+    );
 
     const updateValue = {
       ...value,
@@ -141,6 +145,8 @@ const AddHistory = ({ onSubmit, date }: IAddHistoryProps) => {
                   id="amount"
                   className={st.amountInput}
                   placeholder="0"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
                   value={value.amount}
                   onChange={handleValueChange}
                 />
@@ -192,6 +198,7 @@ const AddHistory = ({ onSubmit, date }: IAddHistoryProps) => {
               <Typography>메모</Typography>
               <input
                 id="memo"
+                type="text"
                 className={st.inputContainer}
                 value={value.memo}
                 onChange={handleValueChange}
@@ -204,8 +211,10 @@ const AddHistory = ({ onSubmit, date }: IAddHistoryProps) => {
           <Calendar
             isOpen={calendarOpen}
             handleClose={handleCalendarClose}
-            value={dayjs(value.date).toDate()}
-            handleChange={(date) => setValue({ ...value, date: date as Date })}
+            value={formatAsIsoDate(dayjs(value.date))}
+            handleChange={(date) =>
+              setValue({ ...value, date: formatAsIsoDate(dayjs(date as Date)) })
+            }
           />
         </Modal>
       ) : (

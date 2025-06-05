@@ -2,7 +2,9 @@
 
 import useLoadingStore from "@/lib/zustand/store/useLoadingStore";
 import { useUserStore } from "@/lib/zustand/store/useUserStore";
+import { getUser } from "@/services/api/client";
 import { fetchWithAuth } from "@/utils/fetch/fetchWithAuth";
+import { useQuery } from "@tanstack/react-query";
 import { getCookie } from "cookies-next";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -14,6 +16,11 @@ const UserInitializer = () => {
 
   const [hasMounted, setHasMounted] = useState(false);
 
+  const { data, isSuccess } = useQuery({
+    queryKey: ["getUser"],
+    queryFn: getUser,
+  });
+
   useEffect(() => {
     setHasMounted(true);
   }, []);
@@ -24,30 +31,19 @@ const UserInitializer = () => {
     const initUser = async () => {
       startLoginLoading();
 
-      try {
-        const accessToken = getCookie("accessToken");
-
-        if (!accessToken) return;
-
-        const res = await fetchWithAuth("/api/auth/getUser");
-        if (res.ok) {
-          const responseData = await res.json();
-          setUser({
-            id: responseData.data.id,
-            nickname: responseData.data.nickname,
-            email: responseData.data.email,
-            profile_img: responseData.data.profile_img,
-          });
-        }
-      } catch (error) {
-        console.error("getUser error:", error);
-      } finally {
+      if (isSuccess) {
+        setUser({
+          id: data.data.id,
+          nickname: data.data.nickname,
+          email: data.data.email,
+          profile_img: data.data.profile_img,
+        });
         stopLoginLoading();
       }
     };
 
     initUser();
-  }, [hasMounted, pathname]);
+  }, [hasMounted, pathname, isSuccess]);
 
   return null;
 };

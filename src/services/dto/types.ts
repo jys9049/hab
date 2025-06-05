@@ -33,3 +33,20 @@ export interface IMonthSummaryDataDto {
 export interface KakaoLoginResponseDto {
   data: string;
 }
+
+export interface IAllTransactionResponseDto {
+  categoryData: { type: string; amount: any }[];
+  data: IParentHistoryType[];
+  incomeAmount: number;
+  expenseAmount: number;
+  expenseLength: number;
+  totalCount: number;
+}
+
+export interface ITransactionResponseDto {
+  categoryData: { type: string; amount: any }[];
+  data: IParentHistoryType[];
+  incomeAmount: number;
+  expenseAmount: number;
+  expenseLength: number;
+}

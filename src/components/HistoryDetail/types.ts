@@ -4,5 +4,5 @@ export interface IHistoryDetailProps {
   isOpen: boolean;
   history: IParentHistoryType | null;
   handleClose: () => void;
-  date: Date;
+  date: string;
 }

@@ -1,6 +1,5 @@
 "use client";
 
-import useLoadingStore from "@/lib/zustand/store/useLoadingStore";
 import { useUserStore } from "@/lib/zustand/store/useUserStore";
 import Image from "next/image";
 
@@ -18,7 +17,6 @@ const MyPage = () => {
 
   const router = useRouter();
   const user = useUserStore((state) => state.user);
-  const loading = useLoadingStore((state) => state.loginLoading);
 
   const handleLogoutClick = () => {
     deleteCookie("accessToken");
@@ -42,7 +40,6 @@ const MyPage = () => {
     setResetModalOpen(false);
   };
 
-  if (loading) return <>loading...</>;
   return (
     <>
       <div className={st.container}>

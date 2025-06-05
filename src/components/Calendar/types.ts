@@ -2,7 +2,7 @@ export interface ICalendarProps {
   historyData?: ITransactionByMonth[];
   disabledModalStyle?: boolean;
   isOpen: boolean;
-  value: Date;
+  value: string;
   handleClose: () => void;
   handleChange: (
     value: Value,
