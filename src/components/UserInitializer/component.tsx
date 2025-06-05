@@ -3,9 +3,7 @@
 import useLoadingStore from "@/lib/zustand/store/useLoadingStore";
 import { useUserStore } from "@/lib/zustand/store/useUserStore";
 import { getUser } from "@/services/api/client";
-import { fetchWithAuth } from "@/utils/fetch/fetchWithAuth";
 import { useQuery } from "@tanstack/react-query";
-import { getCookie } from "cookies-next";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 

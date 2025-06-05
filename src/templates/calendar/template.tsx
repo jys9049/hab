@@ -7,7 +7,6 @@ import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import st from "./styles.module.scss";
 import { useQuery } from "@tanstack/react-query";
-import { fetchWithAuth } from "@/utils/fetch/fetchWithAuth";
 import { ITransactionByMonth } from "@/components/Calendar/types";
 import { IGetTransactionDto } from "@/services/dto/types";
 import { useUserStore } from "@/lib/zustand/store/useUserStore";
