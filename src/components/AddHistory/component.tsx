@@ -218,7 +218,7 @@ const AddHistory = ({ onSubmit, date }: IAddHistoryProps) => {
           />
         </Modal>
       ) : (
-        <button className={st.addIcon} onClick={handleOpen}>
+        <button className={st.addIcon} onClick={handleOpen} aria-label="addBtn">
           <Add />
         </button>
       )}

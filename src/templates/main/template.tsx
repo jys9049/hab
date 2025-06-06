@@ -100,6 +100,7 @@ export default function MainTemplate() {
         <div className={st.dateContainer}>
           <button
             className={st.iconBtn}
+            aria-label="backBtn"
             onClick={() => handleDateChange("BACK")}
           >
             <Back />
@@ -111,6 +112,7 @@ export default function MainTemplate() {
           </div>
           <button
             className={st.iconBtn}
+            aria-label="forwardBtn"
             onClick={() => handleDateChange("FORWARD")}
           >
             <Forward />

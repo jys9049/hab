@@ -309,15 +309,18 @@ const SummaryTemplate = () => {
                   )
                 )}
             </Skeleton>
-            <div className={st.historyBtnContainer}>
-              <button
-                className={st.historyBtn}
-                onClick={() => fetchNextPage()}
-                disabled={!hasNextPage || isFetchingNextPage}
-              >
-                더 보기
-              </button>
-            </div>
+
+            {hasNextPage && (
+              <div className={st.historyBtnContainer}>
+                <button
+                  className={st.historyBtn}
+                  onClick={() => fetchNextPage()}
+                  disabled={!hasNextPage || isFetchingNextPage}
+                >
+                  더 보기
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>

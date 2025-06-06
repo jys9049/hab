@@ -22,6 +22,7 @@ import {
 } from "@tanstack/react-query";
 import { getUser } from "@/services/api/server";
 import { cookies } from "next/headers";
+import logoImage from "@/assets/mainLogo.png";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -30,7 +31,13 @@ export const metadata: Metadata = {
   title: "슬기로운 지갑생활",
   description: "오늘도 현명한 소비!",
   icons: {
-    icon: "/resource/images/logo/favicon.ico",
+    icon: "/favicon.ico",
+  },
+  openGraph: {
+    title: "슬기로운 지갑생활",
+    description: "오늘도 현명한 소비!",
+    url: "https://hab.jeongyongseong.kr",
+    images: logoImage.src,
   },
 };
 
