@@ -16,7 +16,7 @@ const Menu = () => {
   const menuList = [
     {
       component: <Schedule />,
-      src: "/",
+      src: "/transaction",
     },
     {
       component: <Calendar />,

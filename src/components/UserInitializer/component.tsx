@@ -17,6 +17,7 @@ const UserInitializer = () => {
   const { data, isSuccess } = useQuery({
     queryKey: ["getUser"],
     queryFn: getUser,
+    enabled: hasMounted || pathname !== "/login",
   });
 
   useEffect(() => {
@@ -30,6 +31,7 @@ const UserInitializer = () => {
       startLoginLoading();
 
       if (isSuccess) {
+        console.log(1);
         setUser({
           id: data.data.id,
           nickname: data.data.nickname,

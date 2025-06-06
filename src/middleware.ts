@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const publicPaths = ["/login", "/oauth"]; // 인증 불필요 경로
+const publicPaths = ["/", "/login", "/oauth"]; // 인증 불필요 경로
 
 export async function middleware(request: NextRequest) {
   const { pathname, searchParams } = request.nextUrl;
@@ -22,7 +22,7 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL("/login", baseUrl));
       }
 
-      const response = NextResponse.redirect(new URL("/", baseUrl));
+      const response = NextResponse.redirect(new URL("/transaction", baseUrl));
       response.cookies.set("accessToken", newAccessTokenFromKakao, {
         httpOnly: false,
         secure: process.env.NODE_ENV === "production",
@@ -43,7 +43,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  if (!accessToken) {
+  if (!accessToken && !isPublic) {
     if (!refreshToken) {
       console.log("refreshToken null");
       return NextResponse.redirect(new URL("/login", baseUrl));

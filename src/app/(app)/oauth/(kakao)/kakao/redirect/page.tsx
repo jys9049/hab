@@ -12,7 +12,7 @@ const KakaoRedirect = async ({
   const refreshToken = (await searchParams).refreshToken;
 
   if (accessToken && refreshToken) {
-    redirect("/");
+    redirect("/transaction");
   }
 
   return <></>;
