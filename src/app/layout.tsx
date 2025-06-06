@@ -21,6 +21,7 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import { getUser } from "@/services/api/server";
+import { cookies } from "next/headers";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -41,10 +42,13 @@ export default async function RootLayout({
   dayjs().locale("kr").format();
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery({
-    queryKey: ["getUser"],
-    queryFn: async () => await getUser(),
-  });
+  const accessToken = (await cookies()).get("accessToken");
+  if (accessToken) {
+    await queryClient.prefetchQuery({
+      queryKey: ["getUser"],
+      queryFn: async () => await getUser(),
+    });
+  }
 
   return (
     <html lang="en">
