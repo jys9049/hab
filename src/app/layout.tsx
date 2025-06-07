@@ -16,7 +16,14 @@ export const metadata: Metadata = {
     title: "슬기로운 지갑생활",
     description: "오늘도 현명한 소비!",
     url: "https://hab.jeongyongseong.kr",
-    images: logoImage.src,
+    images: [
+      {
+        url: logoImage.src,
+        width: 1200,
+        height: 630,
+        alt: "슬기로운 지갑생활",
+      },
+    ],
   },
 };
 
