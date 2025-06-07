@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import kakaoLogin from "@/assets/kakao_login.png";
 import logo from "@/assets/LogoIcon.png";
 import st from "./styles.module.scss";

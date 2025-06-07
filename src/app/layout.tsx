@@ -18,7 +18,6 @@ export const metadata: Metadata = {
     url: "https://hab.jeongyongseong.kr",
     images: logoImage.src,
   },
-  themeColor: "#f9f9",
 };
 
 export default async function RootLayout({
