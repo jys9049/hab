@@ -134,7 +134,7 @@ const HistoryDetail = ({
           <div className={st.flexWrap}>
             <Typography>일시</Typography>
             <Typography>
-              {dayjs(updateHistory?.date).format("YYYY-MM-DD hh:mm")}
+              {dayjs(updateHistory?.date).format("YYYY-MM-DD HH:mm")}
             </Typography>
           </div>
           <div className={st.flexWrap}>

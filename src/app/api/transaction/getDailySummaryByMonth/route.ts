@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
 
     const { data, error } = await supabase.rpc("get_daily_summary_by_month", {
       user_id: id,
-      year_month: dayjs(date).utc().format("YYYY-MM"),
+      year_month: dayjs(date).format("YYYY-MM"),
     });
 
     if (!error) {
