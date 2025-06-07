@@ -36,6 +36,8 @@ $chart-red: #f87171;
 $border: #e5e7eb;
 $shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 $shadow-reverse: 0px -4px 12px rgba(0, 0, 0, 0.06);
+$shadow-bold: 0px -4px 12px 8px rgba(0, 0, 0, 0.1);
+$shadow-semi-bold: 0px 6px 15px rgba(0, 0, 0, 0.15);
 
 :root {
   --background: #{$background};
@@ -68,4 +70,6 @@ $shadow-reverse: 0px -4px 12px rgba(0, 0, 0, 0.06);
   --border: #{$border};
   --shadow: #{$shadow};
   --shadow-reverse: #{$shadow-reverse};
+  --shadow-bold: #{$shadow-bold};
+  --shadow-semi-bold: #{$shadow-semi-bold};
 }

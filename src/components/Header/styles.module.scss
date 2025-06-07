@@ -18,6 +18,10 @@
   color: var(--point);
 }
 
+.isMobile {
+  padding-top: 70px;
+}
+
 @include tablet {
   .header {
     box-shadow: none;

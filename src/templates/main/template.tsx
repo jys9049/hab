@@ -22,7 +22,7 @@ import { useUserStore } from "@/lib/zustand/store/useUserStore";
 import useLoadingStore from "@/lib/zustand/store/useLoadingStore";
 import HistoryDetail from "@/components/HistoryDetail";
 
-import { formatAsIsoDate } from "@/utils/date";
+import { formatAsDateTime, formatAsIsoDate } from "@/utils/date";
 import { ITransactionResponseDto } from "@/services/dto/types";
 import { getTransaction } from "@/services/api/client";
 
@@ -31,7 +31,7 @@ export default function MainTemplate() {
   const queryClient = useQueryClient();
   const { loginLoading } = useLoadingStore((state) => state);
 
-  const [date, setDate] = useState(formatAsIsoDate(dayjs()));
+  const [date, setDate] = useState(formatAsDateTime(dayjs()));
 
   const [isCalendarOpen, setIsOpenCalendar] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -55,8 +55,8 @@ export default function MainTemplate() {
 
   const { data: transactionData, isLoading: transactionLoading } =
     useQuery<ITransactionResponseDto>({
-      queryKey: ["transactions", user.id, date],
-      queryFn: () => getTransaction(user.id, date),
+      queryKey: ["transactions", user.id, dayjs(date).format("YYYY-MM-DD")],
+      queryFn: () => getTransaction(user.id, dayjs(date).format("YYYY-MM-DD")),
       enabled: !!user.id,
     });
 
@@ -69,7 +69,7 @@ export default function MainTemplate() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["transactions", user.id, date],
+        queryKey: ["transactions", user.id, dayjs(date).format("YYYY-MM-DD")],
       });
     },
   });
@@ -207,7 +207,7 @@ export default function MainTemplate() {
         isOpen={isHistoryDetailOpen}
         handleClose={handleHistoryDetailClose}
         history={selectHistory}
-        date={date}
+        date={formatAsIsoDate(dayjs(date))}
       />
       <Calendar
         isOpen={isCalendarOpen}

@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     url: "https://hab.jeongyongseong.kr",
     images: logoImage.src,
   },
+  themeColor: "#f9f9",
 };
 
 export default async function RootLayout({
@@ -26,9 +27,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={st.background}>
-        <div>{children}</div>
-      </body>
+      <body className={st.background}>{children}</body>
     </html>
   );
 }

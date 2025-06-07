@@ -12,15 +12,16 @@ import CalendarIcon from "@/assets/Calendar.svg";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
 import { IAddHistoryProps } from "./types";
-import { formatAsDateTime, formatAsIsoDate } from "@/utils/date";
+import { formatAsDateTime } from "@/utils/date";
+import useMobileCheck from "@/hooks/useMobileCheck";
 
 const AddHistory = ({ onSubmit, date }: IAddHistoryProps) => {
+  const { isMobile } = useMobileCheck();
   const [isOpen, setIsOpen] = useState(false);
-
   const [value, setValue] = useState({
     amount: "",
     category: "FOOD",
-    date: formatAsDateTime(dayjs(date)),
+    date: date,
     time: {
       hour: "",
       minute: "",
@@ -102,6 +103,7 @@ const AddHistory = ({ onSubmit, date }: IAddHistoryProps) => {
           value.time.minute ? Number(value.time.minute) : dayjs(date).minute()
         )
     );
+    console.log(updateDate);
 
     const updateValue = {
       ...value,
@@ -211,14 +213,21 @@ const AddHistory = ({ onSubmit, date }: IAddHistoryProps) => {
           <Calendar
             isOpen={calendarOpen}
             handleClose={handleCalendarClose}
-            value={formatAsIsoDate(dayjs(value.date))}
+            value={formatAsDateTime(dayjs(value.date))}
             handleChange={(date) =>
-              setValue({ ...value, date: formatAsIsoDate(dayjs(date as Date)) })
+              setValue({
+                ...value,
+                date: formatAsDateTime(dayjs(date as Date)),
+              })
             }
           />
         </Modal>
       ) : (
-        <button className={st.addIcon} onClick={handleOpen} aria-label="addBtn">
+        <button
+          className={`${st.addIcon} ${isMobile && st.isMobile}`}
+          onClick={handleOpen}
+          aria-label="addBtn"
+        >
           <Add />
         </button>
       )}
