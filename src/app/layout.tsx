@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-
 import "@/styles/global.scss";
 import st from "@/styles/layout.module.scss";
-
 import logoImage from "@/assets/mainLogo.png";
+import KakaoLoadProvider from "@/lib/kakao/provider";
+import QueryProviders from "@/lib/tanstack/providers";
+import { ToastContainer } from "react-toastify";
 
 export const metadata: Metadata = {
   title: "슬기로운 지갑생활",
@@ -27,7 +28,14 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={st.background}>{children}</body>
+      <body className={st.background}>
+        <KakaoLoadProvider>
+          <QueryProviders>
+            {children}
+            <ToastContainer />
+          </QueryProviders>
+        </KakaoLoadProvider>
+      </body>
     </html>
   );
 }

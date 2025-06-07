@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import kakaoLogin from "@/assets/kakao_login.png";
 import logo from "@/assets/LogoIcon.png";
 import st from "./styles.module.scss";
@@ -16,12 +16,6 @@ const LoginPage = () => {
       });
     }
   };
-
-  useEffect(() => {
-    if (window.Kakao && !window.Kakao.isInitialized()) {
-      window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JS_KEY);
-    }
-  }, []);
 
   return (
     <>
