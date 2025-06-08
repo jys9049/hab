@@ -26,6 +26,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  verification: {
+    google: "Ds_ue00N3cB3mZK1o9tzocqgKLHrJMX-UWDrNAINNTo",
+  },
 };
 
 export default async function RootLayout({
@@ -35,12 +38,6 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Head>
-        <meta
-          name="google-site-verification"
-          content="Ds_ue00N3cB3mZK1o9tzocqgKLHrJMX-UWDrNAINNTo"
-        />
-      </Head>
       <body className={st.background}>
         <KakaoLoadProvider>
           <QueryProviders>
