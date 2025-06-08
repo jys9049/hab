@@ -4,6 +4,7 @@ import st from "@/styles/layout.module.scss";
 import KakaoLoadProvider from "@/lib/kakao/provider";
 import QueryProviders from "@/lib/tanstack/providers";
 import { ToastContainer } from "react-toastify";
+import Head from "next/head";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://hab.jeongyongseong.kr"),
@@ -34,6 +35,12 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Head>
+        <meta
+          name="google-site-verification"
+          content="Ds_ue00N3cB3mZK1o9tzocqgKLHrJMX-UWDrNAINNTo"
+        />
+      </Head>
       <body className={st.background}>
         <KakaoLoadProvider>
           <QueryProviders>
