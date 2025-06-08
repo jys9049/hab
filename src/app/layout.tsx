@@ -7,6 +7,7 @@ import QueryProviders from "@/lib/tanstack/providers";
 import { ToastContainer } from "react-toastify";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://hab.jeongyongseong.kr"),
   title: "슬기로운 지갑생활",
   description: "오늘도 현명한 소비!",
   icons: {
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
     url: "https://hab.jeongyongseong.kr",
     images: [
       {
-        url: logoImage.src,
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "슬기로운 지갑생활",
