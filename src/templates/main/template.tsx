@@ -12,8 +12,7 @@ import {
   IParentHistoryType,
 } from "@/components/AddHistory/types";
 import Calendar from "@/components/Calendar";
-import Forward from "@/assets/Forward.svg";
-import Back from "@/assets/Back.svg";
+
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { fetchWithAuth } from "@/utils/fetch/fetchWithAuth";
 import Skeleton from "@/components/Skeleton";

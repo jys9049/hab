@@ -20,8 +20,7 @@ import {
   IMonthSummaryDataDto,
   ITransactionSummaryResponseDto,
 } from "@/services/dto/types";
-import Forward from "@/assets/Forward.svg";
-import Back from "@/assets/Back.svg";
+
 import { useUserStore } from "@/lib/zustand/store/useUserStore";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import Typography from "@/components/Typography";

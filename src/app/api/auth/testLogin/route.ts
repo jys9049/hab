@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
         status: 401,
       });
 
-    let { data: user } = await supabase
+    const { data: user } = await supabase
       .from("users")
       .select("*")
       .eq("id", testId)
