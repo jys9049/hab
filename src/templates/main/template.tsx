@@ -25,6 +25,7 @@ import HistoryDetail from "@/components/HistoryDetail";
 import { formatAsDateTime, formatAsIsoDate } from "@/utils/date";
 import { ITransactionResponseDto } from "@/services/dto/types";
 import { getTransaction } from "@/services/api/client";
+import DateNavigator from "@/components/DateNavigator";
 
 export default function MainTemplate() {
   const user = useUserStore((state) => state.user);
@@ -97,28 +98,12 @@ export default function MainTemplate() {
   return (
     <>
       <div className={st.container}>
-        <div className={st.dateContainer}>
-          <button
-            className={st.iconBtn}
-            aria-label="backBtn"
-            onClick={() => handleDateChange("BACK")}
-          >
-            <Back />
-          </button>
-          <div onClick={handleOpenCalendar}>
-            <Typography variant="title">
-              {dayjs(date).format("MM월 DD일")}
-            </Typography>
-          </div>
-          <button
-            className={st.iconBtn}
-            aria-label="forwardBtn"
-            onClick={() => handleDateChange("FORWARD")}
-          >
-            <Forward />
-          </button>
-        </div>
-
+        <DateNavigator
+          date={date}
+          handleOpenCalendar={handleOpenCalendar}
+          handleDateChange={handleDateChange}
+          dateFormat="MM월 DD일"
+        />
         {!isLoading && transactionData && transactionData.expenseLength > 0 && (
           <div className={st.alarmContainer}>
             <Typography>

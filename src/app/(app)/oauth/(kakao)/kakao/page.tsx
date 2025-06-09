@@ -14,15 +14,38 @@ const getToken = async (code: string) => {
   }
 };
 
+const getTestLogin = async (testId: string) => {
+  const res = await fetch(`${process.env.BASE_URL}/api/auth/testLogin`, {
+    method: "POST",
+    body: JSON.stringify({ testId }),
+    credentials: "include",
+  });
+
+  if (res.ok) {
+    const resData = await res.json();
+
+    return resData.data;
+  }
+};
+
 const KakaoLogin = async ({
   searchParams,
 }: {
-  searchParams: Promise<{ code: string | undefined }>;
+  searchParams: Promise<{
+    code: string | undefined;
+    testId: string | undefined;
+  }>;
 }) => {
   const code = (await searchParams).code;
-  if (!code) return;
+  const testId = (await searchParams).testId;
 
-  const token = await getToken(code);
+  let token = "";
+
+  if (code) {
+    token = await getToken(code);
+  } else if (testId) {
+    token = await getTestLogin(testId);
+  }
 
   if (token) {
     redirect(`/oauth/kakao/redirect?${token}`);

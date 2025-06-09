@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 import Typography from "../Typography";
 import Close from "@/assets/Close.svg";
 import { ICalendarProps, ITransactionByMonth } from "./types";
+import DateNavigator from "../DateNavigator";
 
 const Calendar = ({
   historyData,
@@ -57,44 +58,46 @@ const Calendar = ({
             </div>
           </>
         ) : (
-          <ReactCalendar
-            tileContent={({ date, view }) => {
-              if (view !== "month") return null;
+          <div className="dateNavContainer">
+            <DateNavigator date={value} handleDateChange={handleMonthChange} />
+            <ReactCalendar
+              tileContent={({ date, view }) => {
+                if (view !== "month") return null;
 
-              const filtered = history.filter((item) =>
-                dayjs(item.date).isSame(date, "day")
-              )[0];
+                const filtered = history.filter((item) =>
+                  dayjs(item.date).isSame(date, "day")
+                )[0];
 
-              if (!filtered) return;
+                if (!filtered) return;
 
-              return (
-                <div className="amountContainer">
-                  {filtered.income > 0 && (
-                    <div style={{ color: "green" }}>
-                      {filtered.income.toLocaleString()}
-                    </div>
-                  )}
-                  {filtered.expense > 0 && (
-                    <div style={{ color: "red" }}>
-                      {filtered.expense.toLocaleString()}
-                    </div>
-                  )}
-                </div>
-              );
-            }}
-            className={"positionUp"}
-            calendarType="gregory"
-            onActiveStartDateChange={(date) =>
-              handleMonthChange &&
-              handleMonthChange(dayjs(date.activeStartDate as Date).toDate())
-            }
-            onChange={handleChange}
-            value={value}
-            next2Label={null}
-            prev2Label={null}
-            formatDay={(locale, date) => dayjs(date).format("D")}
-            onClickDay={handleClose}
-          />
+                return (
+                  <div className="amountContainer">
+                    {filtered.income > 0 && (
+                      <div style={{ color: "green" }}>
+                        {filtered.income.toLocaleString()}
+                      </div>
+                    )}
+                    {filtered.expense > 0 && (
+                      <div style={{ color: "red" }}>
+                        {filtered.expense.toLocaleString()}
+                      </div>
+                    )}
+                  </div>
+                );
+              }}
+              className={"positionUp"}
+              calendarType="gregory"
+              onChange={handleChange}
+              value={value}
+              showNavigation={false}
+              nextLabel={null}
+              prevLabel={null}
+              next2Label={null}
+              prev2Label={null}
+              formatDay={(locale, date) => dayjs(date).format("D")}
+              onClickDay={handleClose}
+            />
+          </div>
         )}
       </>
     )

@@ -8,7 +8,7 @@ export interface ICalendarProps {
     value: Value,
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void;
-  handleMonthChange?: (date: Date) => void;
+  handleMonthChange?: (type: string) => void;
 }
 
 type ValuePiece = Date | null;

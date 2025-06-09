@@ -15,6 +15,17 @@
   gap: 18px;
 }
 
+.summaryTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  & > a {
+    color: var(--text-gray);
+    text-decoration: none;
+  }
+}
+
 .summaryContainer {
   display: flex;
   flex-direction: column;

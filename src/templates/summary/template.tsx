@@ -24,7 +24,6 @@ import Forward from "@/assets/Forward.svg";
 import Back from "@/assets/Back.svg";
 import { useUserStore } from "@/lib/zustand/store/useUserStore";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import Card from "@/components/Card";
 import Typography from "@/components/Typography";
 
 import { IParentHistoryType } from "@/components/AddHistory/types";
@@ -42,6 +41,7 @@ import {
   getMonthlyTransactionSummary,
 } from "@/services/api/client";
 import { formatAsIsoDate } from "@/utils/date";
+import DateNavigator from "@/components/DateNavigator";
 
 ChartJS.register(
   ArcElement,
@@ -143,27 +143,9 @@ const SummaryTemplate = () => {
   }, [summaryLoading, getMonthlySummaryLoading]);
 
   return (
-    <Card>
-      <div className={st.container}>
-        <div className={st.dateContainer}>
-          <button
-            className={st.iconBtn}
-            onClick={() => handleDateChange("BACK")}
-          >
-            <Back />
-          </button>
-          <div>
-            <Typography variant="title">
-              {dayjs(date).format("YYYY년 MM월")}
-            </Typography>
-          </div>
-          <button
-            className={st.iconBtn}
-            onClick={() => handleDateChange("FORWARD")}
-          >
-            <Forward />
-          </button>
-        </div>
+    <div className={st.container}>
+      <DateNavigator date={date} handleDateChange={handleDateChange} />
+      <div className={st.contentsWrap}>
         <div className={st.summaryBox}>
           <p className={st.title}>이번달 요약</p>
           <div className={st.flexWrap}>
@@ -324,7 +306,7 @@ const SummaryTemplate = () => {
           </div>
         </div>
       </div>
-    </Card>
+    </div>
   );
 };
 

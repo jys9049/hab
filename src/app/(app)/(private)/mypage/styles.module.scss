@@ -31,8 +31,7 @@
 .menuBtn {
   border: none;
   background-color: inherit;
-  width: 200px;
-  height: 40px;
+  cursor: pointer;
 
   & > p {
     text-decoration: underline;
@@ -53,6 +52,7 @@
   background-color: inherit;
   color: var(--text-red);
   text-decoration: underline;
+  cursor: pointer;
 }
 
 .logoutBtn {
@@ -61,4 +61,5 @@
   background-color: inherit;
   padding: 8px 20px;
   border-radius: 4px;
+  cursor: pointer;
 }

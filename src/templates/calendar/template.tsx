@@ -13,6 +13,7 @@ import { useUserStore } from "@/lib/zustand/store/useUserStore";
 import Skeleton from "@/components/Skeleton";
 import { formatAsIsoDate } from "@/utils/date";
 import { getDailySummaryByMonth, getTransaction } from "@/services/api/client";
+import Link from "next/link";
 
 const CalendarTemplate = () => {
   const [date, setDate] = useState(formatAsIsoDate(dayjs()));
@@ -34,8 +35,12 @@ const CalendarTemplate = () => {
       enabled: !!user.id,
     });
 
-  const handleDateChange = (date: Date) => {
-    setDate(formatAsIsoDate(dayjs(date)));
+  const handleDateChange = (type: string) => {
+    if (type === "BACK") {
+      setDate(formatAsIsoDate(dayjs(date).add(-1, "month")));
+    } else {
+      setDate(formatAsIsoDate(dayjs(date).add(1, "month")));
+    }
   };
 
   useEffect(() => {
@@ -60,9 +65,12 @@ const CalendarTemplate = () => {
         </Skeleton>
       </div>
       <div className={st.historyContainer}>
-        <Typography variant="title">
-          {dayjs(selectDate).format("MM월 DD일")} 내역
-        </Typography>
+        <div className={st.summaryTitle}>
+          <Typography variant="title">
+            {dayjs(selectDate).format("MM월 DD일")} 내역
+          </Typography>
+          <Link href={`/transaction?date=${selectDate}`}>내역 상세</Link>
+        </div>
         <div className={st.summaryContainer}>
           <div className={st.flexSpaceBetween}>
             <Typography variant="subTitle">수입</Typography>

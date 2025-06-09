@@ -1,0 +1,21 @@
+.dateContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 35px;
+}
+
+.iconBtn {
+  border: none;
+  background: inherit;
+  & > svg {
+    width: 14px;
+    fill: var(--text);
+  }
+  cursor: pointer;
+}
+
+.date {
+  cursor: pointer;
+}

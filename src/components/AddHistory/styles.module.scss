@@ -12,6 +12,7 @@
   justify-content: center;
   box-sizing: border-box;
   background-color: var(--primary);
+  cursor: pointer;
 
   &:hover {
     background-color: var(--primary-hover);
@@ -42,6 +43,7 @@
   border: none;
   background-color: inherit;
   box-sizing: border-box;
+  cursor: pointer;
 
   & > svg {
     fill: var(--text-title);
@@ -152,6 +154,7 @@
   color: white;
   border-radius: 8px;
   padding: 10px;
+  cursor: pointer;
 }
 
 .dateContainer {
@@ -163,6 +166,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
 
   & > svg {
     fill: var(--text);

@@ -10,6 +10,7 @@ import { deleteCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import WithdrawalModal from "@/components/WithdrawalModal";
 import ResetModal from "@/components/ResetModal";
+import logoIcon from "@/assets/LogoIcon.png";
 
 const MyPage = () => {
   const [resetModalOpen, setResetModalOpen] = useState(false);
@@ -45,7 +46,7 @@ const MyPage = () => {
       <div className={st.container}>
         <div className={st.profileContainer}>
           <Image
-            src={user.profile_img}
+            src={user.profile_img ? user.profile_img : logoIcon}
             width={100}
             height={100}
             alt="profile_img"

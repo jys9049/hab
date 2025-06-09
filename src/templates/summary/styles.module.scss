@@ -3,9 +3,15 @@
 .container {
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 20px 0;
   gap: 32px;
-  background-color: white;
+}
+
+.contentsWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 16px;
 }
 
 .title {
@@ -131,6 +137,7 @@
   padding: 12px 0px;
   width: 100%;
   font-size: 14px;
+  cursor: pointer;
 }
 
 .lastMonthCompare {
