@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import st from "./styles.module.scss";
 import Image from "next/image";
@@ -27,7 +29,9 @@ import State from "@/assets/introduce/state.svg";
 import Auth from "@/assets/introduce/auth.svg";
 import Deploy from "@/assets/introduce/deploy.svg";
 
-const Main = async () => {
+const Main = () => {
+  console.log(process.env.NEXT_PUBLIC_TEST_LOGIN_ID);
+
   return (
     <div className={st.container}>
       {/** 헤더 */}
@@ -60,6 +64,12 @@ const Main = async () => {
               className={st.githubBtn}
             >
               GitHub
+            </Link>
+            <Link
+              href={`/oauth/kakao?testId=${process.env.NEXT_PUBLIC_TEST_LOGIN_ID}`}
+              className={st.demoBtn}
+            >
+              Demo
             </Link>
           </div>
         </div>

@@ -72,6 +72,17 @@
   text-decoration: none;
 }
 
+.demoBtn {
+  border: none;
+  background-color: var(--chart-yellow);
+  color: white;
+  padding: 8px 24px;
+  border-radius: 16px;
+  box-sizing: border-box;
+  font-weight: 500;
+  text-decoration: none;
+}
+
 .mainContainer {
   position: relative;
   display: flex;
