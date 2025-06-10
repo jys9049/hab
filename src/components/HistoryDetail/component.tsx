@@ -126,7 +126,7 @@ const HistoryDetail = ({
       <div className={st.container}>
         <div className={st.header}>
           <Typography variant="title">상세 내역</Typography>
-          <button onClick={handleModalClose}>
+          <button className={st.backBtn} onClick={handleModalClose}>
             <CloseIcon />
           </button>
         </div>
