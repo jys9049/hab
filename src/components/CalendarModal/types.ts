@@ -1,5 +1,4 @@
 export interface ICalendarProps {
-  historyData?: ITransactionByMonth[];
   isOpen: boolean;
   value: string;
   handleClose: () => void;
@@ -7,7 +6,6 @@ export interface ICalendarProps {
     value: Value,
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void;
-  handleMonthChange?: (type: string) => void;
 }
 
 type ValuePiece = Date | null;
