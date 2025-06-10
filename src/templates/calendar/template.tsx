@@ -55,7 +55,6 @@ const CalendarTemplate = () => {
             historyData={monthData && (monthData.data as ITransactionByMonth[])}
             isOpen={true}
             value={date}
-            disabledModalStyle={true}
             handleClose={() => {}}
             handleMonthChange={handleDateChange}
             handleChange={(value) => {
