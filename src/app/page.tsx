@@ -30,8 +30,6 @@ import Auth from "@/assets/introduce/auth.svg";
 import Deploy from "@/assets/introduce/deploy.svg";
 
 const Main = () => {
-  console.log(process.env.NEXT_PUBLIC_TEST_LOGIN_ID);
-
   return (
     <div className={st.container}>
       {/** 헤더 */}

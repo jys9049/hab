@@ -91,9 +91,9 @@ export default function MainTemplate() {
 
   const handleDateChange = (type: string) => {
     if (type === "BACK") {
-      setDate(formatAsIsoDate(dayjs(date).add(-1, "day")));
+      setDate(formatAsDateTime(dayjs(date).add(-1, "day")));
     } else {
-      setDate(formatAsIsoDate(dayjs(date).add(1, "day")));
+      setDate(formatAsDateTime(dayjs(date).add(1, "day")));
     }
   };
 

@@ -15,7 +15,6 @@ const CalendarModal = ({
   handleClose,
   handleChange,
 }: ICalendarProps) => {
-  console.log("calendar component", value);
   const [isRendering, setIsRendering] = useState(false);
 
   useEffect(() => {
