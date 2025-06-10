@@ -26,6 +26,7 @@ import { ITransactionResponseDto } from "@/services/dto/types";
 import { getTransaction } from "@/services/api/client";
 import DateNavigator from "@/components/DateNavigator";
 import { useSearchParams } from "next/navigation";
+import CalendarModal from "@/components/CalendarModal";
 
 export default function MainTemplate() {
   const user = useUserStore((state) => state.user);
@@ -33,17 +34,20 @@ export default function MainTemplate() {
   const dateParam = useSearchParams().get("date");
   const currentDate = dayjs();
   const { loginLoading } = useLoadingStore((state) => state);
-  console.log(dateParam);
 
-  const [date, setDate] = useState(
-    dateParam
-      ? formatAsDateTime(
+  const [date, setDate] = useState(formatAsDateTime(currentDate));
+
+  useEffect(() => {
+    if (dateParam) {
+      setDate(
+        formatAsDateTime(
           dayjs(dateParam)
             .set("hour", currentDate.hour())
             .set("minute", currentDate.minute())
         )
-      : formatAsDateTime(currentDate)
-  );
+      );
+    }
+  }, [dateParam]);
 
   const [isCalendarOpen, setIsOpenCalendar] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -205,7 +209,7 @@ export default function MainTemplate() {
         history={selectHistory}
         date={formatAsIsoDate(dayjs(date))}
       />
-      <Calendar
+      <CalendarModal
         isOpen={isCalendarOpen}
         value={date}
         handleClose={handleCloseCalendar}

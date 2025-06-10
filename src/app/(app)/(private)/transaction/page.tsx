@@ -13,15 +13,10 @@ import { decode } from "jsonwebtoken";
 import { cookies } from "next/headers";
 import React from "react";
 
-const Main = async ({
-  searchParams,
-}: {
-  searchParams: Promise<{ date: string | undefined }>;
-}) => {
+const Main = async () => {
   const queryClient = new QueryClient();
   const accessToken = (await cookies()).get("accessToken");
-  const hasDate = (await searchParams).date;
-  const date = formatAsIsoDate(hasDate ? dayjs(hasDate) : dayjs());
+  const date = formatAsIsoDate(dayjs());
 
   if (!accessToken) return;
   const user = decode(accessToken.value) as TUserType;

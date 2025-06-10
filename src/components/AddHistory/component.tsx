@@ -7,13 +7,13 @@ import Close from "@/assets/Close.svg";
 import Typography from "@/components/Typography";
 import CategorySelect from "@/components/CategorySelect";
 import Modal from "@/components/Modal";
-import Calendar from "@/components/Calendar";
 import CalendarIcon from "@/assets/Calendar.svg";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
 import { IAddHistoryProps } from "./types";
 import { formatAsDateTime } from "@/utils/date";
 import useMobileCheck from "@/hooks/useMobileCheck";
+import CalendarModal from "../CalendarModal";
 
 const AddHistory = ({ onSubmit, date }: IAddHistoryProps) => {
   const { isMobile } = useMobileCheck();
@@ -103,7 +103,6 @@ const AddHistory = ({ onSubmit, date }: IAddHistoryProps) => {
           value.time.minute ? Number(value.time.minute) : dayjs(date).minute()
         )
     );
-    console.log(updateDate);
 
     const updateValue = {
       ...value,
@@ -126,6 +125,10 @@ const AddHistory = ({ onSubmit, date }: IAddHistoryProps) => {
       document.body.style.overflow = "";
     };
   }, [isOpen]);
+
+  useEffect(() => {
+    setValue({ ...value, date: date });
+  }, [date]);
 
   return (
     <>
@@ -210,7 +213,7 @@ const AddHistory = ({ onSubmit, date }: IAddHistoryProps) => {
           <button className={st.addBtn} onClick={handleSubmit}>
             <Typography color="white">추가하기</Typography>
           </button>
-          <Calendar
+          <CalendarModal
             isOpen={calendarOpen}
             handleClose={handleCalendarClose}
             value={formatAsDateTime(dayjs(value.date))}

@@ -24,8 +24,6 @@ export async function POST(request: NextRequest) {
       .eq("id", testId)
       .single();
 
-    console.log(user);
-
     const access_token = generateAccessToken({
       id: user.id,
       nickname: user.nickname,

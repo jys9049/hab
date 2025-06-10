@@ -31,7 +31,6 @@ const UserInitializer = () => {
       startLoginLoading();
 
       if (isSuccess) {
-        console.log(1);
         setUser({
           id: data.data.id,
           nickname: data.data.nickname,
