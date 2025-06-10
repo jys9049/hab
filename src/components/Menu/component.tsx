@@ -9,7 +9,7 @@ import Chart from "@/assets/Chart.svg";
 import Schedule from "@/assets/Schedule.svg";
 import { usePathname, useRouter } from "next/navigation";
 
-const Menu = ({ isMobile }: { isMobile: boolean }) => {
+const Menu = () => {
   const route = useRouter();
   const pathname = usePathname();
 
@@ -33,7 +33,7 @@ const Menu = ({ isMobile }: { isMobile: boolean }) => {
   ];
 
   return (
-    <div className={`${st.container} ${isMobile && st.isMobile}`}>
+    <div className={st.container}>
       {menuList.map((menu) => (
         <div
           key={menu.src}

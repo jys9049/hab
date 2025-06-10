@@ -42,6 +42,7 @@ const LoginPage = () => {
             src={kakaoLogin}
             width={300}
             height={45}
+            quality={100}
             alt="kakao login image"
           />
         </button>

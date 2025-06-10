@@ -25,13 +25,25 @@ import { formatAsDateTime, formatAsIsoDate } from "@/utils/date";
 import { ITransactionResponseDto } from "@/services/dto/types";
 import { getTransaction } from "@/services/api/client";
 import DateNavigator from "@/components/DateNavigator";
+import { useSearchParams } from "next/navigation";
 
 export default function MainTemplate() {
   const user = useUserStore((state) => state.user);
   const queryClient = useQueryClient();
+  const dateParam = useSearchParams().get("date");
+  const currentDate = dayjs();
   const { loginLoading } = useLoadingStore((state) => state);
+  console.log(dateParam);
 
-  const [date, setDate] = useState(formatAsDateTime(dayjs()));
+  const [date, setDate] = useState(
+    dateParam
+      ? formatAsDateTime(
+          dayjs(dateParam)
+            .set("hour", currentDate.hour())
+            .set("minute", currentDate.minute())
+        )
+      : formatAsDateTime(currentDate)
+  );
 
   const [isCalendarOpen, setIsOpenCalendar] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
