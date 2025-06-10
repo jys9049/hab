@@ -65,9 +65,14 @@ const MyPage = () => {
           <button className={st.logoutBtn} onClick={handleLogoutClick}>
             <Typography>로그아웃</Typography>
           </button>
-          <button className={st.withdrawalBtn} onClick={handleWithoutModalOpen}>
-            회원탈퇴
-          </button>
+          {user.nickname !== "test" && (
+            <button
+              className={st.withdrawalBtn}
+              onClick={handleWithoutModalOpen}
+            >
+              회원탈퇴
+            </button>
+          )}
         </div>
       </div>
       <WithdrawalModal
