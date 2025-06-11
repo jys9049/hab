@@ -31,18 +31,17 @@ export default function MainTemplate() {
   const user = useUserStore((state) => state.user);
   const queryClient = useQueryClient();
   const dateParam = useSearchParams().get("date");
-  const currentDate = dayjs();
   const { loginLoading } = useLoadingStore((state) => state);
 
-  const [date, setDate] = useState(formatAsDateTime(currentDate));
+  const [date, setDate] = useState(formatAsDateTime(dayjs()));
 
   useEffect(() => {
     if (dateParam) {
       setDate(
         formatAsDateTime(
           dayjs(dateParam)
-            .set("hour", currentDate.hour())
-            .set("minute", currentDate.minute())
+            .set("hour", dayjs().hour())
+            .set("minute", dayjs().minute())
         )
       );
     }

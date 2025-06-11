@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
       .from("transactions")
       .insert({
         user_id: accessToken.id,
-        date: dayjs(req.date).utc().toDate(),
+        date: dayjs(req.date).toDate(),
         category: req.category,
         type: req.category === "PAY" ? "income" : "expense",
         amount: Number(req.amount),

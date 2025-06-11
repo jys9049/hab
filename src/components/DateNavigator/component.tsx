@@ -21,7 +21,7 @@ const DateNavigator = ({
         className={st.iconBtn}
         onClick={() => handleDateChange && handleDateChange("BACK")}
       >
-        <Back />
+        <Back aria-label="prevMonth" />
       </button>
       <div
         className={st.date}
@@ -35,7 +35,7 @@ const DateNavigator = ({
         className={st.iconBtn}
         onClick={() => handleDateChange && handleDateChange("FRONT")}
       >
-        <Forward />
+        <Forward aria-label="forwardMonth" />
       </button>
     </div>
   );
