@@ -153,14 +153,14 @@
 
 .keyFeaturesCardWrap {
   display: flex;
-  justify-content: center;
-  gap: 24px;
+  justify-content: space-around;
+  gap: 12px;
 }
 
 .keyFeaturesCard {
   display: flex;
   flex-direction: column;
-  width: 240px;
+  width: 260px;
   gap: 12px;
   padding: 10px;
   border-radius: 12px;
