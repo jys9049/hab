@@ -9,14 +9,13 @@ import AppLayout from "@/components/AppLayout/component";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
+dayjs.locale("ko");
 
 export default async function MainLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  dayjs().locale("kr").format();
-
   return (
     <div className={st.container}>
       <div className={st.logoImg}>

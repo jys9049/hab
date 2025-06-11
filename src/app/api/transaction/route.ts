@@ -34,8 +34,8 @@ export async function GET(request: NextRequest) {
     const kstStart = dayjs.tz(date, "Asia/Seoul").startOf("day");
     const kstEnd = dayjs.tz(date, "Asia/Seoul").endOf("day");
 
-    const utcStart = kstStart.utc().toISOString();
-    const utcEnd = kstEnd.utc().toISOString();
+    const utcStart = kstStart.toISOString();
+    const utcEnd = kstEnd.toISOString();
 
     const { data, error } = await supabase
       .from("transactions")
