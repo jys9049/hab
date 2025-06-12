@@ -34,15 +34,12 @@ export async function GET(request: NextRequest) {
     const kstStart = dayjs.tz(date, "Asia/Seoul").startOf("day");
     const kstEnd = dayjs.tz(date, "Asia/Seoul").endOf("day");
 
-    const utcStart = kstStart.toISOString();
-    const utcEnd = kstEnd.toISOString();
-
     const { data, error } = await supabase
       .from("transactions")
       .select("*")
       .eq("user_id", id)
-      .gte("date", utcStart.toString())
-      .lte("date", utcEnd.toString())
+      .gte("date", kstStart.toString())
+      .lte("date", kstEnd.toString())
       .order("date", { ascending: false });
 
     const filterOfCategoryData = (
