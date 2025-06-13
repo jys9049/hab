@@ -1,29 +1,29 @@
-name: Deploy to EC2
+name: Deploy to EC2 # 워크플로우의 이름
 
-on:
-  workflow_dispatch:
-    inputs:
-      branch:
-        description: "Branch to deploy"
+on: # 어떤 이벤트가 발생했을 때 이 워크플로우를 실행할지에 대한 정의
+  workflow_dispatch: # 워크플로우를 수동으로 실행할 수 있게 함
+    inputs: # 수동으로 실행할 때 사용자로부터 입력받을 값들을 정의
+      branch: # 브랜치라는 이름의 입력값 정의
+        description: "Branch to deploy" # 입력값에 대한 설정
         required: true
-        type: string
-        default: "main"
+        type: string # 입력값의 타입은 문자열
+        default: "main" # 기본값으로 main 브랜치 사용
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
+jobs: # 워크플로우에서 실행될 하나 이상의 작업을 정의
+  deploy: # deploy라는 이름의 작업을 정의
+    runs-on: ubuntu-latest # 이 작업이 실행될 가상 환경 지정 [ubuntu-latest]는 깃허브에서 제공하는 가장 최신 버전의 우분투 리눅스 환경임을 의미
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    steps: # deploy 작업 안에서 실행될 단계들을 순서대로 정의
+      - name: Checkout code # 이 단계의 이름을 Checkout code로 정의
+        uses: actions/checkout@v4 # 미리 만들어진 actions/checkout@v4 액션을 사용 (이 액션은 워크플로우를 실행하는 레포지토리의 코드를 가상 환경으로 가져오는 checkout 역할을 함.)
 
-      - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.EC2_SSH_PRIVATE_KEY }} # GitHub Secrets에서 SSH 개인 키 가져오기
+      - name: Set up SSH # 이 단계의 이름을 Set up SSH로 정의
+        uses: webfactory/ssh-agent@v0.9.0 # SSH 접속에 필요한 개인키를 설정해주는 액션
+        with: # 이 액션에 필요한 파라미터를 전달
+          ssh-private-key: ${{ secrets.EC2_SSH_PRIVATE_KEY }} # EC2 인스턴스에 접속하기 위한 SSH 개인키를 GitHub Secrets에서 가져와 설정
 
-      - name: Deploy to EC2 instance
-        env:
+      - name: Deploy to EC2 instance # 이 단계의 이름을 Deploy to EC2 instance로 정의
+        env: # 이 단계에서 사용할 환경 변수 설정
           EC2_HOST: ${{ secrets.EC2_HOST }}
           EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
           ENV_FILE_CONTENT: ${{ secrets.ENV_FILE_CONTENT }}
@@ -43,16 +43,16 @@ jobs:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
 
-        run: |
+        run: | # 셸 스크립트 실행
           echo "Setting up SSH known_hosts"
           mkdir -p ~/.ssh
-          ssh-keyscan -H "${{ env.EC2_HOST }}" >> ~/.ssh/known_hosts
-          chmod 600 ~/.ssh/known_hosts # 권한 문제 방지
+          ssh-keyscan -H "${{ env.EC2_HOST }}" >> ~/.ssh/known_hosts # 중간자 공격을 방지하기 위해 접속하려는 EC2 호스트의 공개키를 known_hosts 파일에 미리 등록 하는 과정
+          chmod 600 ~/.ssh/known_hosts # 파일의 권한을 소유자만 읽고 쓸 수 있도록 변경하여 보안 강화
 
 
           echo "Executing deployment script on EC2..." 
-          ssh -T ${{ env.EC2_USERNAME }}@${{ env.EC2_HOST }} << 'EOF'
-            set -e
+          ssh -T ${{ env.EC2_USERNAME }}@${{ env.EC2_HOST }} << 'EOF' # 설정된 정보를 바탕으로 EC2 인스턴스에 SSH로 접속하고, EOF가 나올 때까지의 명령어들을 원격 서버(EC2)에서 실행
+            set -e # EC2 서버에서 실행되는 스크립트의 명령어 중 하나라도 실패하면 즉시 스크립트 전체 중단
 
             echo "Connected to EC2 instance: ${{ env.EC2_HOST }}"
             
@@ -81,7 +81,7 @@ jobs:
               --build-arg BUILD_ARG_NEXT_PUBLIC_SUPABASE_ANON_KEY="${{env.NEXT_PUBLIC_SUPABASE_ANON_KEY}}" \
               --build-arg BUILD_ARG_NEXT_PUBLIC_SUPABASE_URL="${{env.NEXT_PUBLIC_SUPABASE_URL}}" \
               --build-arg BUILD_ARG_NEXT_PUBLIC_TEST_LOGIN_ID="${{env.NEXT_PUBLIC_TEST_LOGIN_ID}}" \
-            web
+            web # docker-compose.yml 파일에 정의된 여러 서비스 중 web 이라는 이름의 서비스만 빌드
             
             echo "Stopping and recreating services..."
             sudo docker compose down -v
