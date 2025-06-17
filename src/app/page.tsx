@@ -197,16 +197,16 @@ const Main = () => {
                     width={160}
                     height={349}
                     alt={"loginIntro"}
-                    quality={100}
                     className={st.imgWrap}
+                    priority={true}
                   />
                   <Image
                     src={kakaoLogin}
                     width={160}
                     height={349}
                     alt={"loginIntro"}
-                    quality={100}
                     className={st.imgWrap}
+                    priority={true}
                   />
                 </div>
               </div>
@@ -222,16 +222,16 @@ const Main = () => {
                   width={160}
                   height={349}
                   alt={"transaction"}
-                  quality={100}
                   className={st.imgWrap}
+                  priority={true}
                 />
                 <Image
                   src={addtransaction}
                   width={160}
                   height={349}
                   alt={"addtransaction"}
-                  quality={100}
                   className={st.imgWrap}
+                  priority={true}
                 />
               </div>
             </div>
@@ -249,8 +249,8 @@ const Main = () => {
                     width={160}
                     height={349}
                     alt={"calendar"}
-                    quality={100}
                     className={st.imgWrap}
+                    priority={true}
                   />
                 </div>
               </div>
@@ -266,16 +266,16 @@ const Main = () => {
                   width={160}
                   height={349}
                   alt={"summary"}
-                  quality={100}
                   className={st.imgWrap}
+                  priority={true}
                 />
                 <Image
                   src={summary2}
                   width={160}
                   height={349}
                   alt={"summary2"}
-                  quality={100}
                   className={st.imgWrap}
+                  priority={true}
                 />
               </div>
             </div>
@@ -289,24 +289,24 @@ const Main = () => {
               width={140}
               height={306}
               alt={"transactionIntro"}
-              quality={100}
               className={st.imgWrap}
+              priority={true}
             />
             <Image
               src={calendar}
               width={161}
               height={350}
               alt={"transactionIntro"}
-              quality={100}
               className={st.imgWrap}
+              priority={true}
             />
             <Image
               src={summary}
               width={161}
               height={350}
               alt={"transactionIntro"}
-              quality={100}
               className={st.imgWrap}
+              priority={true}
             />
           </div>
         </section>
@@ -322,13 +322,7 @@ const Main = () => {
                 "https://www.linkedin.com/in/%EC%9A%A9%EC%84%B1-%EC%A0%95-454256325/"
               }
             >
-              <Image
-                src={linkedIn}
-                width={25}
-                height={25}
-                alt={"linkedIn"}
-                quality={100}
-              />
+              <Image src={linkedIn} width={25} height={25} alt={"linkedIn"} />
             </Link>
           </div>
         </div>
