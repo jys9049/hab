@@ -142,7 +142,7 @@ const SummaryTemplate = () => {
   }, [summaryLoading, getMonthlySummaryLoading]);
 
   return (
-    <div className={st.container}>
+    <main className={st.container}>
       <DateNavigator date={date} handleDateChange={handleDateChange} />
       <div className={st.contentsWrap}>
         <div className={st.summaryBox}>
@@ -305,7 +305,7 @@ const SummaryTemplate = () => {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 

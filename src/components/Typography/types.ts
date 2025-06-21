@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 
 export interface ITypographyProps extends PropsWithChildren {
-  as?: "p" | "span";
+  as?: "p" | "span" | "h1";
   variant?: TVariant;
   color?: TColor;
   bold?: boolean;

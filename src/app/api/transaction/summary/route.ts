@@ -27,11 +27,8 @@ export async function GET(request: NextRequest) {
   const id = searchParams.get("id");
   const date = searchParams.get("date"); // YYYY-MM-DD
 
-  const startOfMonth = dayjs
-    .tz(date, "Asia/Seoul")
-    .startOf("month")
-    .format("YYYY-MM-DD");
-  const endOfMonth = dayjs.tz(date, "Asia/Seoul").endOf("month");
+  const startOfMonth = dayjs(date).startOf("month").format("YYYY-MM-DD");
+  const endOfMonth = dayjs(date).endOf("month");
 
   const { data, error } = await supabase
     .from("transactions")

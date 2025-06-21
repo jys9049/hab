@@ -1,5 +1,5 @@
 # builder
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 ARG BUILD_ARG_NEXT_PUBLIC_BASE_URL
 ARG BUILD_ARG_NEXT_PUBLIC_KAKAO_INTERGRITY

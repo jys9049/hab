@@ -7,6 +7,7 @@
   justify-content: space-between;
   padding: 120px 0 140px;
   gap: 32px;
+  box-sizing: border-box;
 }
 
 .logoContainer {
@@ -32,4 +33,5 @@
   box-sizing: border-box;
   background-color: inherit;
   border: none;
+  cursor: pointer;
 }

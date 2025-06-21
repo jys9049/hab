@@ -12,6 +12,9 @@ import WithdrawalModal from "@/components/WithdrawalModal";
 import ResetModal from "@/components/ResetModal";
 import logoIcon from "@/assets/LogoIcon.png";
 
+import Robot from "@/assets/robot.svg";
+import Reset from "@/assets/reset.svg";
+
 const MyPage = () => {
   const [resetModalOpen, setResetModalOpen] = useState(false);
   const [withdrawalModalOpen, setWithdrawalModalOpen] = useState(false);
@@ -57,7 +60,15 @@ const MyPage = () => {
           </Typography>
         </div>
         <div className={st.menuContainer}>
+          <button
+            className={st.menuBtn}
+            onClick={() => router.push("/analyze")}
+          >
+            <Robot />
+            <Typography variant="body">AI 분석</Typography>
+          </button>
           <button className={st.menuBtn} onClick={handleResetModalOpen}>
+            <Reset />
             <Typography variant="body">가계부 초기화</Typography>
           </button>
         </div>

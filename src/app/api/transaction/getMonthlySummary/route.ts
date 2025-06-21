@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
+import { tokenCheck } from "@/utils/fetch/serverTokenCheck/serverTokenCheck";
 
 dayjs.extend(utc);
 
@@ -11,16 +12,7 @@ export async function GET(request: NextRequest) {
     NextResponse.next();
   }
 
-  const token =
-    typeof window === "undefined"
-      ? request.headers.get("Authorization")
-      : request.cookies.get("accessToken");
-
-  if (!token) {
-    return NextResponse.json("AccessToken이 만료되었습니다.", {
-      status: 401,
-    });
-  }
+  tokenCheck(request);
 
   try {
     const searchParams = request.nextUrl.searchParams;
