@@ -37,6 +37,9 @@ export const metadata: Metadata = {
   verification: {
     google: "Ds_ue00N3cB3mZK1o9tzocqgKLHrJMX-UWDrNAINNTo",
   },
+  alternates: {
+    canonical: "https://hab.jeongyongseong.kr",
+  },
 };
 
 export default async function RootLayout({
