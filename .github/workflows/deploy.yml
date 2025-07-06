@@ -33,6 +33,8 @@ jobs: # 워크플로우에서 실행될 하나 이상의 작업을 정의
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           NEXT_PUBLIC_TEST_LOGIN_ID: ${{ secrets.NEXT_PUBLIC_TEST_LOGIN_ID }}
+          NEXT_PUBLIC_GOOGLE_GTM_ID: ${{ secrets.NEXT_PUBLIC_GOOGLE_GTM_ID }}
+          NEXT_PUBLIC_GOOGLE_GA_ID: ${{ secrets.NEXT_PUBLIC_GOOGLE_GA_ID }}
 
           BASE_URL: ${{ secrets.BASE_URL }}
           JWT_ACCESS_SECRET: ${{ secrets.JWT_ACCESS_SECRET }}
@@ -83,6 +85,8 @@ jobs: # 워크플로우에서 실행될 하나 이상의 작업을 정의
               --build-arg BUILD_ARG_NEXT_PUBLIC_SUPABASE_ANON_KEY="${{env.NEXT_PUBLIC_SUPABASE_ANON_KEY}}" \
               --build-arg BUILD_ARG_NEXT_PUBLIC_SUPABASE_URL="${{env.NEXT_PUBLIC_SUPABASE_URL}}" \
               --build-arg BUILD_ARG_NEXT_PUBLIC_TEST_LOGIN_ID="${{env.NEXT_PUBLIC_TEST_LOGIN_ID}}" \
+              --build-arg BUILD_ARG_NEXT_PUBLIC_GOOGLE_GTM_ID="${{env.NEXT_PUBLIC_GOOGLE_GTM_ID}}" \
+              --build-arg BUILD_ARG_NEXT_PUBLIC_GOOGLE_GA_ID="${{env.NEXT_PUBLIC_GOOGLE_GA_ID}}" \
             web # docker-compose.yml 파일에 정의된 여러 서비스 중 web 이라는 이름의 서비스만 빌드
             
             echo "Stopping and recreating services..."
